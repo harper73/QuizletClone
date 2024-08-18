@@ -1,11 +1,11 @@
 package com.project.quizletclone.model;
 
 import jakarta.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "courses")
-public class Course {
+@Table(name = "videos")
+public class Video {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,17 +14,13 @@ public class Course {
     private String title;
 
     @Column(nullable = false)
-    private String subjectArea; // Example: Computer Science, Mathematics
+    private String url;
 
-    @Column(nullable = false)
+    @Column
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @OneToMany(mappedBy = "course")
-    private Set<Quiz> quizzes;
+    @Column(nullable = false)
+    private String subjectArea;
 
     // Getters and setters
     public Long getId() {
@@ -43,12 +39,12 @@ public class Course {
         this.title = title;
     }
 
-    public String getSubjectArea() {
-        return subjectArea;
+    public String getUrl() {
+        return url;
     }
 
-    public void setSubjectArea(String subjectArea) {
-        this.subjectArea = subjectArea;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getDescription() {
@@ -59,27 +55,21 @@ public class Course {
         this.description = description;
     }
 
-    public User getUser() {
-        return user;
+    public String getSubjectArea() {
+        return subjectArea;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<Quiz> getQuizzes() {
-        return quizzes;
-    }
-
-    public void setQuizzes(Set<Quiz> quizzes) {
-        this.quizzes = quizzes;
+    public void setSubjectArea(String subjectArea) {
+        this.subjectArea = subjectArea;
     }
 
     @Override
     public String toString() {
-        return "Course{" +
+        return "Video{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", description='" + description + '\'' +
                 ", subjectArea='" + subjectArea + '\'' +
                 '}';
     }

@@ -11,10 +11,13 @@ public class Question {
     private Long id;
 
     @Column(nullable = false)
-    private String text;
+    private String questionText;
+
+    @Column(nullable = false)
+    private String correctAnswer;
 
     @ManyToOne
-    @JoinColumn(name = "quiz_id")
+    @JoinColumn(name = "quiz_id", nullable = false)
     private Quiz quiz;
 
     @OneToMany(mappedBy = "question")
@@ -29,12 +32,12 @@ public class Question {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getQuestionText() {
+        return questionText;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
     }
 
     public Quiz getQuiz() {
@@ -45,11 +48,28 @@ public class Question {
         this.quiz = quiz;
     }
 
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
     public Set<Answer> getAnswers() {
         return answers;
     }
 
     public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", questionText='" + questionText + '\'' +
+                ", correctAnswer='" + correctAnswer + '\'' +
+                '}';
     }
 }

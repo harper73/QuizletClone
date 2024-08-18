@@ -13,11 +13,14 @@ public class Quiz {
     @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
+    private String subjectArea; // Example: Computer Science, Mathematics
+
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private Set<Question> questions;
 
     // Getters and setters
@@ -37,6 +40,14 @@ public class Quiz {
         this.title = title;
     }
 
+    public String getSubjectArea() {
+        return subjectArea;
+    }
+
+    public void setSubjectArea(String subjectArea) {
+        this.subjectArea = subjectArea;
+    }
+
     public Course getCourse() {
         return course;
     }
@@ -51,5 +62,15 @@ public class Quiz {
 
     public void setQuestions(Set<Question> questions) {
         this.questions = questions;
+    }
+
+    @Override
+    public String toString() {
+        return "Quiz{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", subjectArea='" + subjectArea + '\'' +
+                ", course=" + course +
+                '}';
     }
 }
