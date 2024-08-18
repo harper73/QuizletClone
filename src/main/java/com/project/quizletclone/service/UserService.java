@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -50,47 +51,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Performance addPerformance(Long userId, Long quizId, Integer score, Long duration) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        Quiz quiz = quizRepository.findById(quizId).orElseThrow(() -> new IllegalArgumentException("Quiz not found"));
-
-        Performance performance = new Performance();
-        performance.setUser(user);
-        performance.setQuiz(quiz);
-        performance.setScore(score);
-        performance.setDuration(duration);
-        performance.setDateTaken(LocalDate.now().toString()); // Set the current date as dateTaken
-
-        return performanceRepository.save(performance);
-    }
-
-    public Achievement addAchievement(Long userId, String title, String description, String dateAwarded) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        Achievement achievement = new Achievement();
-        achievement.setUser(user);
-        achievement.setTitle(title);
-        achievement.setDescription(description);
-        achievement.setDateAwarded(dateAwarded);
-
-        return achievementRepository.save(achievement);
-    }
-
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     public User findUserById(Long id) {
         return userRepository.findById(id).orElse(null);
-    }
-
-    public Iterable<Performance> getPerformance(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        return performanceRepository.findAll(); // Customize as needed
-    }
-
-    public Iterable<Achievement> getAchievements(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        return achievementRepository.findAll(); // You might want to filter achievements by user
     }
 
     public User updateUser(Long id, String username, String email) {
@@ -114,23 +80,6 @@ public class UserService {
         return user != null && passwordEncoder.matches(password, user.getPassword());
     }
 
-    public Bookmark addBookmark(Long userId, String contentType, Long contentId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        Bookmark bookmark = new Bookmark();
-        bookmark.setUser(user);
-        bookmark.setContentType(contentType);
-        bookmark.setContentId(contentId);
 
-        return bookmarkRepository.save(bookmark);
-    }
-
-    public void removeBookmark(Long userId, Long bookmarkId) {
-        Bookmark bookmark = bookmarkRepository.findById(bookmarkId)
-                .orElseThrow(() -> new IllegalArgumentException("Bookmark not found"));
-        if (!bookmark.getUser().getId().equals(userId)) {
-            throw new SecurityException("User not authorized");
-        }
-        bookmarkRepository.delete(bookmark);
-    }
     // Additional methods for user management can be added here
 }

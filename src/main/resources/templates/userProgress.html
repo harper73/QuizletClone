@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Progress Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<h1>Progress Dashboard for [[${user.username}]]</h1>
+
+<h2>Hello, <span th:text="${user.username}"></span>!</h2>
+
+<h3>Statistics:</h3>
+<ul>
+    <li>Total Quizzes Taken: <span th:text="${totalQuizzesTaken}"></span></li>
+    <li>Average Score: <span th:text="${averageScore}"></span></li>
+    <li>Quizzes Completed: <span th:text="${quizzesCompleted}"></span></li>
+    <li>Achievements Unlocked: <span th:text="${achievementsUnlocked}"></span></li>
+</ul>
+
+<h2>Performance</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Quiz</th>
+        <th>Score</th>
+        <th>Duration</th>
+        <th>Date Taken</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="performance : ${performances}">
+        <td th:text="${performance.quiz.title}">Quiz Title</td>
+        <td th:text="${performance.score}">Score</td>
+        <td th:text="${performance.duration}">Duration</td>
+        <td th:text="${performance.dateTaken}">Date Taken</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Achievements</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Date Awarded</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="achievement : ${achievements}">
+        <td th:text="${achievement.title}">Achievement Title</td>
+        <td th:text="${achievement.description}">Description</td>
+        <td th:text="${achievement.dateAwarded}">Date Awarded</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -4,6 +4,7 @@ import com.project.quizletclone.model.Bookmark;
 import com.project.quizletclone.model.User;
 import com.project.quizletclone.model.Performance;
 import com.project.quizletclone.model.Achievement;
+import com.project.quizletclone.service.PerformanceService;
 import com.project.quizletclone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,44 +40,6 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    @PostMapping("/{userId}/performance")
-    public Performance addPerformance(@PathVariable Long userId,
-                                      @RequestParam Long quizId,
-                                      @RequestParam Integer score,
-                                      @RequestParam Long duration) {
-        return userService.addPerformance(userId, quizId, score, duration);
-    }
-
-    @GetMapping("/{userId}/performance")
-    public Iterable<Performance> getPerformance(@PathVariable Long userId) {
-        return userService.getPerformance(userId);
-    }
-
-    @PostMapping("/{userId}/achievements")
-    public Achievement addAchievement(@PathVariable Long userId,
-                                      @RequestParam String title,
-                                      @RequestParam String description,
-                                      @RequestParam String dateAwarded) {
-        return userService.addAchievement(userId, title, description, dateAwarded);
-    }
-
-    @GetMapping("/{userId}/achievements")
-    public Iterable<Achievement> getAchievements(@PathVariable Long userId) {
-        return userService.getAchievements(userId);
-    }
-
-    @PostMapping("/{userId}/bookmarks")
-    public Bookmark addBookmark(@PathVariable Long userId,
-                                @RequestParam String contentType,
-                                @RequestParam Long contentId) {
-        return userService.addBookmark(userId, contentType, contentId);
-    }
-
-    @DeleteMapping("/{userId}/bookmarks/{bookmarkId}")
-    public void removeBookmark(@PathVariable Long userId,
-                               @PathVariable Long bookmarkId) {
-        userService.removeBookmark(userId, bookmarkId);
-    }
 
     @PostMapping("/login")
     public boolean authenticateUser(@RequestParam String username,

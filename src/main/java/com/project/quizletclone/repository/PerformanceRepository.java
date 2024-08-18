@@ -8,4 +8,8 @@ import java.util.List;
 @Repository
 public interface PerformanceRepository extends JpaRepository<Performance, Long> {
     List<Performance> findByUserId(Long userId);
+    int countByUserId(Long userId);
+    double findAverageScoreByUserId(Long userId);
+    int countCompletedQuizzesByUserId(Long userId);
+    List<Performance> findByUserIdOrderByDateTaken(Long userId);
 }

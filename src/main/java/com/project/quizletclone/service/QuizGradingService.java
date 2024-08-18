@@ -5,9 +5,11 @@ import com.project.quizletclone.model.Question;
 import com.project.quizletclone.model.Quiz;
 import com.project.quizletclone.model.User;
 import com.project.quizletclone.model.Achievement;
+import com.project.quizletclone.model.Performance;
 import com.project.quizletclone.repository.QuestionRepository;
 import com.project.quizletclone.repository.QuizRepository;
 import com.project.quizletclone.repository.AchievementRepository;
+import com.project.quizletclone.repository.PerformanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,9 @@ public class QuizGradingService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PerformanceService performanceService;
 
     @Autowired
     private AchievementRepository achievementRepository;
@@ -89,7 +94,7 @@ public class QuizGradingService {
 
         // Use the existing addPerformance method from UserService
         long duration = calculateDuration(userAnswers.size()); // Adjust based on your logic
-        userService.addPerformance(userId, quizId, totalScore, duration);
+        performanceService.addPerformance(userId, quizId, totalScore, duration);
 
         // Check for and award achievements
         checkAndAwardAchievements(userId, totalScore, questions.size());
