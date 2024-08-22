@@ -1,7 +1,9 @@
 package com.project.quizletclone.controller;
 
+import com.project.quizletclone.model.Achievement;
 import com.project.quizletclone.model.User;
 import com.project.quizletclone.model.Performance;
+import com.project.quizletclone.service.AchievementService;
 import com.project.quizletclone.service.UserService;
 import com.project.quizletclone.service.PerformanceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class UserProgressController {
     @Autowired
     private PerformanceService performanceService;
 
+    @Autowired
+    private AchievementService achievementService;
+
     @GetMapping("/{userId}/progress")
     public String getUserDashboard(@PathVariable Long userId, Authentication authentication, Model model) {
         System.out.println("Start here");
@@ -45,6 +50,7 @@ public class UserProgressController {
         }
 
         User authenticatedUser = userService.findUserByUsername(username);
+        System.out.println("\nReach 1\n");
 
         if (authenticatedUser == null) {
             return "error/404"; // Handle user not found
@@ -57,22 +63,38 @@ public class UserProgressController {
 
         // Fetch the user dashboard data
         User user = userService.findUserById(userId);
+        System.out.println("\nReach 2\n");
         if (user == null) {
             return "error/404"; // Handle user not found
         }
 
+        System.out.println("\nReach 3\n");
         int totalQuizzesTaken = performanceService.getTotalQuizzesTaken(user.getId());
+        System.out.println(totalQuizzesTaken);
+        System.out.println(user.getId());
+
         double averageScore = performanceService.getAverageScore(user.getId());
+
+
+        System.out.println("\nReach 4\n");
         int quizzesCompleted = performanceService.getQuizzesCompleted(user.getId());
         int achievementsUnlocked = user.getAchievements().size();
         List<Performance> performanceOverTime = performanceService.getPerformanceOverTime(user.getId());
 
+        Iterable<Performance> performances = performanceService.getPerformance(user.getId()); // Fetch performances
+
+        Iterable<Achievement> achievements = achievementService.getAchievements(user.getId()); // Fetch achievements
+
+        System.out.println("\nReach 5\n");
         model.addAttribute("user", user);
         model.addAttribute("totalQuizzesTaken", totalQuizzesTaken);
         model.addAttribute("averageScore", averageScore);
         model.addAttribute("quizzesCompleted", quizzesCompleted);
         model.addAttribute("achievementsUnlocked", achievementsUnlocked);
         model.addAttribute("performanceOverTime", performanceOverTime);
+
+        model.addAttribute("performances", performances); // Add performances to model
+        model.addAttribute("achievements", achievements); // Add achievements to model
 
         return "userProgress"; // Thymeleaf template name
     }

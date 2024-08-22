@@ -19,7 +19,7 @@ public class Achievement {
     @Column(nullable = false)
     private String description;
 
-    @Column
+    @Column(name = "dateAwarded")
     private String dateAwarded;
 
     // Getters and setters

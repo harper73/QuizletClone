@@ -28,6 +28,13 @@ public class AchievementService {
     }
 
     public Iterable<Achievement> getAchievements(Long userId) {
+        Iterable<Achievement> achievements = achievementRepository.findByUserId(userId);
+        for (Achievement achievement : achievements) {
+            System.out.println("Achievement Title: " + achievement.getTitle());
+            System.out.println("Achievement Description: " + achievement.getDescription());
+            System.out.println("Achievement Date Awarded: " + achievement.getDateAwarded());
+        }
+
         return achievementRepository.findByUserId(userId);
     }
 }
