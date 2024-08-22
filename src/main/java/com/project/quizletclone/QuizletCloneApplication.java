@@ -9,5 +9,4 @@ public class QuizletCloneApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(QuizletCloneApplication.class, args);
 	}
-
 }

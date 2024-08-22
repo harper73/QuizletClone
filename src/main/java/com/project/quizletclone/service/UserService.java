@@ -80,6 +80,9 @@ public class UserService {
         return user != null && passwordEncoder.matches(password, user.getPassword());
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 
     // Additional methods for user management can be added here
 }
