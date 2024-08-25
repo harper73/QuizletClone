@@ -22,10 +22,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/signup")
+    public String showSignUpPage() {
+        System.out.print("\nIt should reach signup page here\n");
+        return "/signup"; // This refers to the signup.html template
+    }
+
     @PostMapping("/register")
     public User registerUser(@RequestParam String username,
                              @RequestParam String password,
                              @RequestParam String email) {
+        System.out.print("\nThis should register user\n");
         return userService.registerUser(username, password, email);
     }
 

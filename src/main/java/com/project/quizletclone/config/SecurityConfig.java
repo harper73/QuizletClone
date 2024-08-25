@@ -41,9 +41,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
+                        // Allow access to static resources
+                        .requestMatchers("/Login_v4/**").permitAll()
+                        .requestMatchers("/signup-form-19/**").permitAll()
+                        // Add a matcher for sign-up page URL
+                        .requestMatchers("/api/users/signup").permitAll()
                         .requestMatchers("/api/users/register").permitAll()
                         .requestMatchers("/api/users/login").permitAll()
                         .requestMatchers("/api/users/redirectAfterLogin").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
