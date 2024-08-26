@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 import java.util.ArrayList;
 
@@ -67,6 +68,11 @@ public class SecurityConfig {
                 )
                 .authenticationProvider(customAuthenticationProvider); // Ensure custom provider is used
         return http.build();
+    }
+
+    @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter();
     }
 
 //    @Bean

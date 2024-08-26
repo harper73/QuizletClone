@@ -8334,3 +8334,23 @@ a[data-toggle="collapse"] {
   .form-control:-moz-placeholder {
     /* Firefox 18- */
     color: rgba(0, 0, 0, 0.3); }
+
+/* Custom styles */
+.avatar-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}
+
+.manage-account-link {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.manage-account-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}

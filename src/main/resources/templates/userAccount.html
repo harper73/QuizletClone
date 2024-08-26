@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Manage Account</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <link rel="stylesheet" href="/sidebar-02/css/style.css">
+</head>
+<body>
+<div class="wrapper d-flex align-items-stretch">
+  <nav id="sidebar">
+    <div class="custom-menu">
+      <button type="button" id="sidebarCollapse" class="btn btn-primary">
+        <i class="fa fa-bars"></i>
+        <span class="sr-only">Toggle Menu</span>
+      </button>
+    </div>
+    <div class="p-4 pt-5">
+      <h2><a href="userProgress.html" class="logo">LearnQuest</a></h2>
+      <div class="p-4 pt-5 text-center">
+        <div class="user-avatar mb-4">
+          <img th:src="@{/uploads/{avatarPath}(avatarPath=${user.avatarPath})}" alt="User Avatar" class="img-fluid rounded-circle avatar-img">
+        </div>
+        <a th:href="@{'/api/users/' + ${user.id} + '/manage'}" class="manage-account-link">Manage Account</a>
+      </div>
+
+      <ul class="list-unstyled components mb-5">
+        <li class="active">
+          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li>
+              <a href="#">Home 1</a>
+            </li>
+            <li>
+              <a href="#">Home 2</a>
+            </li>
+            <li>
+              <a href="#">Home 3</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Dashboard</a>
+        </li>
+        <li>
+          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Quizzes</a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li>
+              <a href="#">Page 1</a>
+            </li>
+            <li>
+              <a href="#">Page 2</a>
+            </li>
+            <li>
+              <a href="#">Page 3</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Settings</a>
+        </li>
+        <li>
+          <a href="#">Performance</a>
+        </li>
+      </ul>
+
+      <div class="mb-5">
+        <h3 class="h6">Subscribe for newsletter</h3>
+        <form action="#" class="colorlib-subscribe-form">
+          <div class="form-group d-flex">
+            <div class="icon"><span class="icon-paper-plane"></span></div>
+            <input type="text" class="form-control" placeholder="Enter Email Address">
+          </div>
+        </form>
+      </div>
+
+      <!--            <div class="footer">-->
+      <!--                <p>&lt;!&ndash; Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. &ndash;&gt;-->
+      <!--                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>-->
+      <!--                </p>-->
+      <!--            </div>-->
+    </div>
+  </nav>
+
+  <div id="content" class="p-4 p-md-5 pt-5">
+    <h2>Manage Your Account</h2>
+
+    <!-- Display user account information -->
+    <div class="account-info">
+      <p>User Name: <span th:text="${user.username}">First Name</span></p>
+      <p>Email: <span th:text="${user.email}">Email</span></p>
+      <p>Password: <span th:text="${user.password}">Email</span></p>
+    </div>
+
+    <!-- Form to update user information -->
+    <form th:action="@{/api/users/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="_method" value="put"/>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" th:value="${user.username}" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:value="${user.email}" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label for="avatar">Avatar Image:</label>
+        <input type="file" id="avatar" name="avatar" class="form-control-file"/>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Update Account</button>
+      </div>
+    </form>
+
+    <!-- Link to delete user account -->
+    <form th:action="@{/api/users/{id}(id=${user.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete your account?');">
+      <input type="hidden" name="_method" value="delete"/>
+      <button type="submit" class="btn btn-danger">Delete Account</button>
+    </form>
+  </div>
+</div>
+
+<script src="/sidebar-02/js/jquery.min.js"></script>
+<script src="/sidebar-02/js/popper.js"></script>
+<script src="/sidebar-02/js/bootstrap.min.js"></script>
+<script src="/sidebar-02/js/main.js"></script>
+</body>
+</html>

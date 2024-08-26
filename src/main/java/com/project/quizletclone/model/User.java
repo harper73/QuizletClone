@@ -21,6 +21,10 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    // Add a field for the avatar image path
+    @Column(name = "avatar_path")
+    private String avatarPath;
+
     @OneToMany(mappedBy = "user")
     private Set<Performance> performances;
 
@@ -64,6 +68,15 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    // Setter for avatarPath
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
     public Set<Performance> getPerformances() {

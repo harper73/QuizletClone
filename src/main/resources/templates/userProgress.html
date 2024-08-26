@@ -19,10 +19,17 @@
             </button>
         </div>
         <div class="p-4 pt-5">
-            <h1><a href="userProgress.html" class="logo">Splash</a></h1>
+            <h2><a href="userProgress.html" class="logo">LearnQuest</a></h2>
+            <div class="p-4 pt-5 text-center">
+                <div class="user-avatar mb-4">
+                    <img th:src="@{/uploads/{avatarPath}(avatarPath=${user.avatarPath})}" alt="User Avatar" class="img-fluid rounded-circle avatar-img">
+                </div>
+                <a th:href="@{'/api/users/' + ${user.id} + '/manage'}" class="manage-account-link">Manage Account</a>
+            </div>
+
             <ul class="list-unstyled components mb-5">
                 <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
                             <a href="#">Home 1</a>
@@ -36,10 +43,10 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="#">Dashboard</a>
                 </li>
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Quizzes</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
                             <a href="#">Page 1</a>
@@ -53,10 +60,10 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Portfolio</a>
+                    <a href="#">Settings</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="#">Performance</a>
                 </li>
             </ul>
 
@@ -70,11 +77,11 @@
                 </form>
             </div>
 
-            <div class="footer">
-                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-                </p>
-            </div>
+<!--            <div class="footer">-->
+<!--                <p>&lt;!&ndash; Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. &ndash;&gt;-->
+<!--                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>-->
+<!--                </p>-->
+<!--            </div>-->
         </div>
     </nav>
 

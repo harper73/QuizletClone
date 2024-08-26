@@ -14,6 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,6 +46,18 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    // Directory to save uploaded files
+    private final Path uploadPath = Paths.get("src/main/resources/static/uploads").toAbsolutePath().normalize();
+
+    public UserService() {
+        // Create the directory if it doesn't exist
+        try {
+            Files.createDirectories(uploadPath);
+        } catch (Exception ex) {
+            throw new RuntimeException("Could not create the directory where the uploaded files will be stored.", ex);
+        }
+    }
+
     public User registerUser(String username, String password, String email) {
         if (userRepository.findByUsername(username) != null) {
             throw new IllegalArgumentException("Username already exists");
@@ -56,17 +76,62 @@ public class UserService {
     }
 
     public User findUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
-    public User updateUser(Long id, String username, String email) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    private String saveAvatarFile(MultipartFile avatar) throws IOException {
+        // Ensure the file is not empty
+        if (avatar.isEmpty()) {
+            throw new RuntimeException("Failed to store empty file.");
+        }
+
+//        // Normalize the file name and handle any potential path traversal issues
+//        String fileName = UUID.randomUUID().toString() + "-" + avatar.getOriginalFilename();
+//        Path targetLocation = fileStorageLocation.resolve(fileName);
+//
+//        try {
+//            // Copy the file to the target location (replacing any existing file)
+//            Files.copy(avatar.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+//        } catch (IOException ex) {
+//            throw new RuntimeException("Could not store file. Please try again!", ex);
+//        }
+//
+//        // Return the relative path or URL of the file
+//        return targetLocation.toString(); // can also return a relative path if needed
+
+        // Get the original file name including its extension
+        String fileName = avatar.getOriginalFilename();
+        if (fileName == null || fileName.isEmpty()) {
+            throw new RuntimeException("Failed to get the original file name.");
+        }
+        // Define the target file path
+        Path targetPath = uploadPath.resolve(fileName);
+        // Save the file to the target path
+        try (var inputStream = avatar.getInputStream()) {
+            Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
+        }
+        // Return the file name
+        return fileName;
+    }
+
+
+    public User updateUser(Long id, String username, String email, MultipartFile avatar) throws IOException {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
         if (username != null && !username.isEmpty()) {
             user.setUsername(username);
         }
         if (email != null && !email.isEmpty()) {
             user.setEmail(email);
         }
+        if (avatar != null && !avatar.isEmpty()) {
+            // Handle avatar file saving (this would involve saving the file somewhere and setting the path on the user)
+            String avatarPath = saveAvatarFile(avatar); // This method should save the file and return the path
+            user.setAvatarPath(avatarPath);
+        }
+
         return userRepository.save(user);
     }
 

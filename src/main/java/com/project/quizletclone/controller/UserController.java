@@ -11,7 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -41,16 +44,28 @@ public class UserController {
         return userService.findUserByUsername(username);
     }
 
+    @GetMapping("/{id}/manage")
+    public String getUserAccountPage(@PathVariable Long id, Model model) {
+        User user = userService.findUserById(id);
+        model.addAttribute("user", user);
+        return "/userAccount"; // The name of the Thymeleaf template
+    }
+
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id,
+    public String updateUser(@PathVariable Long id,
                            @RequestParam(required = false) String username,
-                           @RequestParam(required = false) String email) {
-        return userService.updateUser(id, username, email);
+                           @RequestParam(required = false) String email,
+                           @RequestParam(required = false) MultipartFile avatar,
+                           RedirectAttributes redirectAttributes) throws IOException {
+        User updatedUser = userService.updateUser(id, username, email, avatar);
+        redirectAttributes.addFlashAttribute("user", updatedUser);
+        return "redirect:/api/users/" + id + "/manage";
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+        return "redirect:/logout"; // Redirect to logout after account deletion
     }
 
 
