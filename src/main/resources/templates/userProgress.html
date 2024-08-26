@@ -4,142 +4,71 @@
     <title>User Progress Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/sidebar-02/css/style.css">
 </head>
 <body>
 <div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">
-        <div class="custom-menu">
-            <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                <i class="fa fa-bars"></i>
-                <span class="sr-only">Toggle Menu</span>
-            </button>
-        </div>
-        <div class="p-4 pt-5">
-            <h2><a href="userProgress.html" class="logo">LearnQuest</a></h2>
-            <div class="p-4 pt-5 text-center">
-                <div class="user-avatar mb-4">
-                    <img th:src="@{/uploads/{avatarPath}(avatarPath=${user.avatarPath})}" alt="User Avatar" class="img-fluid rounded-circle avatar-img">
-                </div>
-                <a th:href="@{'/api/users/' + ${user.id} + '/manage'}" class="manage-account-link">Manage Account</a>
-            </div>
+<!-- Include the base template -->
+<div th:replace="~{fragments/base :: content}">
 
-            <ul class="list-unstyled components mb-5">
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Dashboard</a>
-                </li>
-                <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Quizzes</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Settings</a>
-                </li>
-                <li>
-                    <a href="#">Performance</a>
-                </li>
-            </ul>
-
-            <div class="mb-5">
-                <h3 class="h6">Subscribe for newsletter</h3>
-                <form action="#" class="colorlib-subscribe-form">
-                    <div class="form-group d-flex">
-                        <div class="icon"><span class="icon-paper-plane"></span></div>
-                        <input type="text" class="form-control" placeholder="Enter Email Address">
-                    </div>
-                </form>
-            </div>
-
-<!--            <div class="footer">-->
-<!--                <p>&lt;!&ndash; Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. &ndash;&gt;-->
-<!--                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>-->
-<!--                </p>-->
-<!--            </div>-->
-        </div>
-    </nav>
-
-    <!-- Page Content  -->
-    <div id="content" class="p-4 p-md-5 pt-5">
-        <h2 class="mb-4">User Progress Dashboard</h2>
-        <h1>Progress Dashboard for <span th:text="${user.username}">Username</span></h1>
-
-        <h2>Hello, <span th:text="${user.username}">Username</span>!</h2>
-
-        <h3>Statistics:</h3>
-        <ul>
-            <li>Total Quizzes Taken: <span th:text="${totalQuizzesTaken}">0</span></li>
-            <li>Average Score: <span th:text="${averageScore}">0</span></li>
-            <li>Quizzes Completed: <span th:text="${quizzesCompleted}">0</span></li>
-            <li>Achievements Unlocked: <span th:text="${achievementsUnlocked}">0</span></li>
-        </ul>
-
-        <h2>Performance</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Quiz</th>
-                <th>Score</th>
-                <th>Duration</th>
-                <th>Date Taken</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="performance : ${performances}">
-                <td th:text="${performance.quiz.title}">Quiz Title</td>
-                <td th:text="${performance.score}">Score</td>
-                <td th:text="${performance.duration}">Duration</td>
-                <td th:text="${performance.dateTaken}">Date Taken</td>
-            </tr>
-            </tbody>
-        </table>
-
-        <h2>Achievements</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Date Awarded</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="achievement : ${achievements}">
-                <td th:text="${achievement.title}">Achievement Title</td>
-                <td th:text="${achievement.description}">Description</td>
-                <td th:text="${achievement.dateAwarded}">Date Awarded</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
 
+<!-- Page Content -->
+<div id="content" class="p-4 p-md-5 pt-5">
+    <h2 class="mb-4">User Progress Dashboard</h2>
+    <h1>Progress Dashboard for <span th:text="${user.username}">Username</span></h1>
+
+    <h2>Hello, <span th:text="${user.username}">Username</span>!</h2>
+
+    <h3>Statistics:</h3>
+    <ul>
+        <li>Total Quizzes Taken: <span th:text="${totalQuizzesTaken}">0</span></li>
+        <li>Average Score: <span th:text="${averageScore}">0</span></li>
+        <li>Quizzes Completed: <span th:text="${quizzesCompleted}">0</span></li>
+        <li>Achievements Unlocked: <span th:text="${achievementsUnlocked}">0</span></li>
+    </ul>
+
+    <h2>Performance</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Quiz</th>
+            <th>Score</th>
+            <th>Duration</th>
+            <th>Date Taken</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="performance : ${performances}">
+            <td th:text="${performance.quiz.title}">Quiz Title</td>
+            <td th:text="${performance.score}">Score</td>
+            <td th:text="${performance.duration}">Duration</td>
+            <td th:text="${performance.dateTaken}">Date Taken</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Achievements</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Date Awarded</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="achievement : ${achievements}">
+            <td th:text="${achievement.title}">Achievement Title</td>
+            <td th:text="${achievement.description}">Description</td>
+            <td th:text="${achievement.dateAwarded}">Date Awarded</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
 <script src="/sidebar-02/js/jquery.min.js"></script>
 <script src="/sidebar-02/js/popper.js"></script>
 <script src="/sidebar-02/js/bootstrap.min.js"></script>

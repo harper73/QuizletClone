@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Base Template</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <link rel="stylesheet" href="/sidebar-02/css/style.css">
+</head>
+<body>
+
+  <div th:fragment="content">
+  <nav id="sidebar">
+    <div class="custom-menu">
+      <button type="button" id="sidebarCollapse" class="btn btn-primary">
+        <i class="fa fa-bars"></i>
+        <span class="sr-only">Toggle Menu</span>
+      </button>
+    </div>
+    <div class="p-4 pt-5">
+      <h1><a href="/userProgress.html" class="logo">LearnQuest</a></h1>
+      <div class="p-4 pt-5 text-center">
+        <div class="user-avatar mb-4">
+          <img th:src="@{/uploads/{avatarPath}(avatarPath=${user.avatarPath})}" alt="User Avatar" class="img-fluid rounded-circle avatar-img">
+        </div>
+        <a th:href="@{'/api/users/' + ${user.id} + '/manage'}" class="manage-account-link">Manage Account</a>
+      </div>
+      <ul class="list-unstyled components mb-5">
+        <li class="active">
+          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li><a href="#">Home 1</a></li>
+            <li><a href="#">Home 2</a></li>
+            <li><a href="#">Home 3</a></li>
+          </ul>
+        </li>
+        <li><a th:href="@{'/user/' + ${user.id} + '/progress'}">Dashboard</a></li>
+        <li>
+          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Quizzes</a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li><a href="#">Page 1</a></li>
+            <li><a href="#">Page 2</a></li>
+            <li><a href="#">Page 3</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="#">Performance</a></li>
+      </ul>
+      <div class="mb-5">
+        <h3 class="h6">Subscribe for newsletter</h3>
+        <form action="#" class="colorlib-subscribe-form">
+          <div class="form-group d-flex">
+            <div class="icon"><span class="icon-paper-plane"></span></div>
+            <input type="text" class="form-control" placeholder="Enter Email Address">
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  </div>
+<!--  <div id="content" class="p-4 p-md-5 pt-5">-->
+<!--    &lt;!&ndash; Content will be inserted here &ndash;&gt;-->
+<!--    <div th:fragment="content">-->
+<!--      <h1>Welcome to My Website</h1>-->
+<!--      <p>This is the header content.</p>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<script src="/sidebar-02/js/jquery.min.js"></script>
+<script src="/sidebar-02/js/popper.js"></script>
+<script src="/sidebar-02/js/bootstrap.min.js"></script>
+<script src="/sidebar-02/js/main.js"></script>
+</body>
+</html>

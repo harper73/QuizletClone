@@ -65,7 +65,10 @@ public class UserController {
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return "redirect:/logout"; // Redirect to logout after account deletion
+//        there is a bug here that after delete user, redirect to login
+//        if we click sign up, we able to do that, update to db
+//        but failed to load the template
+        return "redirect:/api/users/login"; // Redirect to login after account deletion
     }
 
 
