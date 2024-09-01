@@ -5,85 +5,70 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/sidebar-02/css/style.css">
+  <style>
+    .account-form {
+      width: 60%;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      display: flex;
+      flex-wrap: wrap; /* Allow wrapping of elements */
+      align-items: flex-start;
+    }
+
+    .avatar-container {
+      margin-right: 20px;
+      flex-shrink: 0; /* Prevents shrinking of avatar container */
+    }
+
+    .avatar-container img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+
+    .form-container {
+      flex: 1;
+      min-width: 0; /* Prevents overflowing of form container */
+    }
+
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      width: 100%; /* Ensure form groups take up full width */
+    }
+
+    .form-group label {
+      font-weight: bold;
+      width: 100%; /* Ensure labels take up full width */
+    }
+
+    .form-buttons {
+      display: flex;
+      /*justify-content: space-between;*/
+      flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+      gap: 10px;
+    }
+  </style>
+
 </head>
 <body>
 <div class="wrapper d-flex align-items-stretch">
-  <nav id="sidebar">
-    <div class="custom-menu">
-      <button type="button" id="sidebarCollapse" class="btn btn-primary">
-        <i class="fa fa-bars"></i>
-        <span class="sr-only">Toggle Menu</span>
-      </button>
-    </div>
-    <div class="p-4 pt-5">
-      <h1><a href="userProgress.html" class="logo">LearnQuest</a></h1>
-      <div class="p-4 pt-5 text-center">
-        <div class="user-avatar mb-4">
-          <img th:src="@{/uploads/{avatarPath}(avatarPath=${user.avatarPath})}" alt="User Avatar" class="img-fluid rounded-circle avatar-img">
-        </div>
-        <a th:href="@{'/api/users/' + ${user.id} + '/manage'}" class="manage-account-link">Manage Account</a>
-      </div>
-
-      <ul class="list-unstyled components mb-5">
-        <li class="active">
-          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li>
-              <a href="#">Home 1</a>
-            </li>
-            <li>
-              <a href="#">Home 2</a>
-            </li>
-            <li>
-              <a href="#">Home 3</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">Dashboard</a>
-        </li>
-        <li>
-          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Quizzes</a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
-            <li>
-              <a href="#">Page 1</a>
-            </li>
-            <li>
-              <a href="#">Page 2</a>
-            </li>
-            <li>
-              <a href="#">Page 3</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">Settings</a>
-        </li>
-        <li>
-          <a href="#">Performance</a>
-        </li>
-      </ul>
-
-      <div class="mb-5">
-        <h3 class="h6">Subscribe for newsletter</h3>
-        <form action="#" class="colorlib-subscribe-form">
-          <div class="form-group d-flex">
-            <div class="icon"><span class="icon-paper-plane"></span></div>
-            <input type="text" class="form-control" placeholder="Enter Email Address">
-          </div>
-        </form>
-      </div>
-
-      <!--            <div class="footer">-->
-      <!--                <p>&lt;!&ndash; Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. &ndash;&gt;-->
-      <!--                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>-->
-      <!--                </p>-->
-      <!--            </div>-->
-    </div>
-  </nav>
+  <!-- Include the base template -->
+  <div th:replace="~{fragments/base :: content}"></div>
 
   <div id="content" class="p-4 p-md-5 pt-5">
+    <div th:replace="~{fragments/base :: content2}"></div>
+
     <h2>Manage Your Account</h2>
 
     <!-- Display user account information -->
@@ -93,31 +78,111 @@
       <p>Password: <span th:text="${user.password}">Email</span></p>
     </div>
 
-    <!-- Form to update user information -->
-    <form th:action="@{/api/users/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="_method" value="put"/>
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" th:value="${user.username}" class="form-control"/>
+    <div class="account-form">
+      <div class="avatar-container">
+        <img th:src="@{/uploads/{avatarPath}(avatarPath=${user.avatarPath})}" alt="User Avatar">
       </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" th:value="${user.email}" class="form-control"/>
-      </div>
-      <div class="form-group">
-        <label for="avatar">Avatar Image:</label>
-        <input type="file" id="avatar" name="avatar" class="form-control-file"/>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">Update Account</button>
-      </div>
-    </form>
+      <div class="form-container">
+        <!-- Form to update user information -->
+        <form th:action="@{/api/users/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="_method" value="put"/>
 
-    <!-- Link to delete user account -->
-    <form th:action="@{/api/users/{id}(id=${user.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete your account?');">
-      <input type="hidden" name="_method" value="delete"/>
-      <button type="submit" class="btn btn-danger">Delete Account</button>
-    </form>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="firstName">First Name:</label>
+              <input type="text" id="firstName" name="firstName" class="form-control"/>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="lastName">Last Name:</label>
+              <input type="text" id="lastName" name="lastName" class="form-control"/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="username">Username:</label>
+              <input type="text" id="username" name="username" th:value="${user.username}" class="form-control"/>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" th:value="${user.email}" class="form-control"/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="dateOfBirth">Date of Birth:</label>
+              <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control"/>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="avatar">Avatar Image:</label>
+              <input type="file" id="avatar" name="avatar" class="form-control-file"/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="oldPassword">Old Password:</label>
+              <input type="password" id="oldPassword" name="oldPassword" class="form-control" th:classappend="${invalidOldPassword != null && invalidOldPassword ? 'is-invalid' : ''}" required/>
+              <div class="invalid-feedback" th:if="${invalidOldPassword}">
+                Incorrect old password. Please try again.
+              </div>
+            </div>
+
+
+            <div class="form-group col-md-6">
+              <label for="newPassword">New Password:</label>
+              <input type="password" id="newPassword" name="newPassword" class="form-control"/>
+            </div>
+          </div>
+
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-primary">Update Account</button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.reload();">Cancel</button>
+          </div>
+        </form>
+
+        <!-- Link to delete user account -->
+        <form th:action="@{/api/users/{id}(id=${user.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete your account?');" style="margin-top: 20px;">
+          <input type="hidden" name="_method" value="delete"/>
+          <button type="submit" class="btn btn-danger">Delete Account</button>
+        </form>
+      </div>
+    </div>
+
+    <!--                <div class="col-12">-->
+    <!--                  <label for="dob">Date of Birth:</label>-->
+    <!--                  <input type="date" id="dob" name="dob" th:value="${user.dob}" class="form-control"/>-->
+    <!--                </div>-->
+
+    <!-- Form to update user information -->
+<!--    <form th:action="@{/api/users/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">-->
+<!--      <input type="hidden" name="_method" value="put"/>-->
+<!--      <div class="form-group">-->
+<!--        <label for="username">Username:</label>-->
+<!--        <input type="text" id="username" name="username" th:value="${user.username}" class="form-control"/>-->
+<!--      </div>-->
+<!--      <div class="form-group">-->
+<!--        <label for="email">Email:</label>-->
+<!--        <input type="email" id="email" name="email" th:value="${user.email}" class="form-control"/>-->
+<!--      </div>-->
+<!--      <div class="form-group">-->
+<!--        <label for="avatar">Avatar Image:</label>-->
+<!--        <input type="file" id="avatar" name="avatar" class="form-control-file"/>-->
+<!--      </div>-->
+<!--      <div class="form-group">-->
+<!--        <button type="submit" class="btn btn-primary">Update Account</button>-->
+<!--      </div>-->
+<!--    </form>-->
+
+<!--    &lt;!&ndash; Link to delete user account &ndash;&gt;-->
+<!--    <form th:action="@{/api/users/{id}(id=${user.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete your account?');">-->
+<!--      <input type="hidden" name="_method" value="delete"/>-->
+<!--      <button type="submit" class="btn btn-danger">Delete Account</button>-->
+<!--    </form>-->
   </div>
 </div>
 

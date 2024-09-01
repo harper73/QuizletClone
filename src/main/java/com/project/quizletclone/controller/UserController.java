@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -25,10 +26,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserController(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @GetMapping("/signup")
     public String showSignUpPage() {
         System.out.print("\nIt should reach signup page here\n");
-        return "/signup"; // This refers to the signup.html template
+        return "signup"; // This refers to the signup.html template
     }
 
     @PostMapping("/register")
@@ -48,17 +56,37 @@ public class UserController {
     public String getUserAccountPage(@PathVariable Long id, Model model) {
         User user = userService.findUserById(id);
         model.addAttribute("user", user);
-        return "/userAccount"; // The name of the Thymeleaf template
+        return "userAccount"; // The name of the Thymeleaf template
     }
 
     @PutMapping("/{id}")
     public String updateUser(@PathVariable Long id,
-                           @RequestParam(required = false) String username,
-                           @RequestParam(required = false) String email,
-                           @RequestParam(required = false) MultipartFile avatar,
-                           RedirectAttributes redirectAttributes) throws IOException {
-        User updatedUser = userService.updateUser(id, username, email, avatar);
-        redirectAttributes.addFlashAttribute("user", updatedUser);
+                             @RequestParam(required = false) String username,
+                             @RequestParam(required = false) String email,
+                             @RequestParam(required = false) String dateOfBirth,
+                             @RequestParam(required = false) MultipartFile avatar,
+                             @RequestParam(required = false) String oldPassword,
+                             @RequestParam(required = false) String newPassword,
+                             Model model) throws IOException {
+        // Fetch the user from the database
+        User user = userService.findUserById(id);
+
+        // Verify the old password
+        if (user == null || oldPassword.isEmpty() || !passwordEncoder.matches(oldPassword, user.getPassword())) {
+            model.addAttribute("invalidOldPassword", true);
+            model.addAttribute("user", user);
+            return "userAccount";  // Return to the form page with an error
+        } else {
+            model.addAttribute("invalidOldPassword", false);
+        }
+
+//        User updatedUser = userService.updateUser(id, username, email, dateOfBirth, avatar, oldPassword, newPassword);
+
+        // If the old password is correct, update the user fields
+//        This works perfectly, modify updateUser so we can change password as well !!!
+        userService.updateUser(id, username, email, avatar);
+        model.addAttribute("user", user);
+        model.addAttribute("updateSuccess", true);
         return "redirect:/api/users/" + id + "/manage";
     }
 
@@ -87,7 +115,7 @@ public class UserController {
 //
 //        System.out.println("Encoded Password: " + encodedPassword);
 
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/redirectAfterLogin")

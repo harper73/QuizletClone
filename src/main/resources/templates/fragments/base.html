@@ -6,19 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
   <link rel="stylesheet" href="/sidebar-02/css/style.css">
+
+  <style>
+    .nav-item {
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      align-items: center;     /* Center vertically */
+      height: 100%;            /* Ensure the nav-item takes up the full height */
+    }
+
+    .nav-link {
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      align-items: center;     /* Center vertically */
+    }
+  </style>
 </head>
 <body>
 
   <div th:fragment="content">
+
   <nav id="sidebar">
-    <div class="custom-menu">
-      <button type="button" id="sidebarCollapse" class="btn btn-primary">
-        <i class="fa fa-bars"></i>
-        <span class="sr-only">Toggle Menu</span>
-      </button>
-    </div>
+<!--    <div class="custom-menu">-->
+<!--      <button type="button" id="sidebarCollapse" class="btn btn-primary">-->
+<!--        <i class="fa fa-bars"></i>-->
+<!--        <span class="sr-only">Toggle Menu</span>-->
+<!--      </button>-->
+<!--    </div>-->
     <div class="p-4 pt-5">
-      <h1><a href="/userProgress.html" class="logo">LearnQuest</a></h1>
+      <h2><a th:href="@{'/user/' + ${user.id} + '/progress'}" class="logo" style="color: white; font-weight: bold;">LearnQuest</a></h2>
       <div class="p-4 pt-5 text-center">
         <div class="user-avatar mb-4">
           <img th:src="@{/uploads/{avatarPath}(avatarPath=${user.avatarPath})}" alt="User Avatar" class="img-fluid rounded-circle avatar-img">
@@ -26,38 +42,68 @@
         <a th:href="@{'/api/users/' + ${user.id} + '/manage'}" class="manage-account-link">Manage Account</a>
       </div>
       <ul class="list-unstyled components mb-5">
-        <li class="active">
-          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li><a href="#">Home 1</a></li>
-            <li><a href="#">Home 2</a></li>
-            <li><a href="#">Home 3</a></li>
-          </ul>
-        </li>
-        <li><a th:href="@{'/user/' + ${user.id} + '/progress'}">Dashboard</a></li>
-        <li>
-          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Quizzes</a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
-            <li><a href="#">Page 1</a></li>
-            <li><a href="#">Page 2</a></li>
-            <li><a href="#">Page 3</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Performance</a></li>
+<!--        <li class="active">-->
+<!--          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>-->
+<!--          <ul class="collapse list-unstyled" id="homeSubmenu">-->
+<!--            <li><a href="#">Home 1</a></li>-->
+<!--            <li><a href="#">Home 2</a></li>-->
+<!--            <li><a href="#">Home 3</a></li>-->
+<!--          </ul>-->
+<!--        </li>-->
+        <li class="active"><a th:href="@{'/user/' + ${user.id} + '/progress'}">Dashboard</a></li>
+        <li class="active"><a href="#">Quizzes</a></li>
+        <li class="active"><a href="#">Articles</a></li>
+        <li class="active"><a href="#">Videos</a></li>
+        <li class="active"><a href="#">My Notes</a></li>
+        <li class="active"><a href="#">Progression</a></li>
+
       </ul>
-      <div class="mb-5">
-        <h3 class="h6">Subscribe for newsletter</h3>
-        <form action="#" class="colorlib-subscribe-form">
-          <div class="form-group d-flex">
-            <div class="icon"><span class="icon-paper-plane"></span></div>
-            <input type="text" class="form-control" placeholder="Enter Email Address">
-          </div>
-        </form>
-      </div>
+<!--      <div class="mb-5">-->
+<!--        <h3 class="h6">Subscribe for newsletter</h3>-->
+<!--        <form action="#" class="colorlib-subscribe-form">-->
+<!--          <div class="form-group d-flex">-->
+<!--            <div class="icon"><span class="icon-paper-plane"></span></div>-->
+<!--            <input type="text" class="form-control" placeholder="Enter Email Address">-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </div>-->
     </div>
   </nav>
   </div>
+
+  <div th:fragment="content2">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <i class="fa fa-bars"></i>
+          <span class="sr-only">Toggle Menu</span>
+        </button>
+        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa fa-bars"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href=""><img th:src="@{/uploads/{avatarPath}(avatarPath=${user.avatarPath})}" alt="User Avatar" class="img-fluid rounded-circle" width="31"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href=""><i class="fa fa-cog fa-2x" aria-hidden="true" style="color:#ff0000"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href=""><i class="fa fa-bell fa-2x" aria-hidden="true" style="color:#ff0000"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href=""><i class="fa fa-sign-out fa-2x" aria-hidden="true" style="color:#ff0000"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
 <!--  <div id="content" class="p-4 p-md-5 pt-5">-->
 <!--    &lt;!&ndash; Content will be inserted here &ndash;&gt;-->
 <!--    <div th:fragment="content">-->
