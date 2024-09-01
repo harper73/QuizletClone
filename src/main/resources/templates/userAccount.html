@@ -250,11 +250,7 @@
   </div>
 </div>
 
-<script src="/sidebar-02/js/jquery.min.js"></script>
-<script src="/sidebar-02/js/popper.js"></script>
-<script src="/sidebar-02/js/bootstrap.min.js"></script>
-<script src="/sidebar-02/js/main.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function() {
     var selectedAvatarUrl = '';
@@ -270,20 +266,31 @@
     // Confirm avatar selection
     $('#confirmAvatar').on('click', function() {
       if(selectedAvatarUrl) {
+        var fileName = selectedAvatarUrl.split('/').pop();
+        console.log(fileName);
         $('#currentAvatar').attr('src', selectedAvatarUrl);
         $('#selectedAvatarInput').val(selectedAvatarUrl);
+        $('#avatar').val(''); // Clear the file input
         $('#avatarModal').modal('hide');
       }
     });
 
-    // Reset selection when modal closes
+    // // Reset selection when modal closes
     $('#avatarModal').on('hidden.bs.modal', function () {
       $('.modal-avatar').removeClass('selected');
       $('#confirmAvatar').prop('disabled', true);
       selectedAvatarUrl = '';
     });
+
+
+
   });
 
 </script>
+
+<script src="/sidebar-02/js/popper.js"></script>
+<script src="/sidebar-02/js/bootstrap.min.js"></script>
+<script src="/sidebar-02/js/main.js"></script>
+
 </body>
 </html>

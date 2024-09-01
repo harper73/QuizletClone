@@ -115,8 +115,22 @@ public class UserService {
         return fileName;
     }
 
+    private String copySelectedAvatar(String selectedAvatar) throws IOException {
+        // Get the file name from the selected avatar path
+        String fileName = selectedAvatar.substring(selectedAvatar.lastIndexOf('/') + 1);
 
-    public User updateUser(Long id, String username, String email, MultipartFile avatar) throws IOException {
+        // Define the source and target paths
+        Path sourcePath = Paths.get("src/main/resources/static" + selectedAvatar).toAbsolutePath().normalize();
+        Path targetPath = uploadPath.resolve(fileName);
+
+        // Copy the file from the source to the target location
+        Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+
+        // Return the file name to be stored in the user's avatar path
+        return fileName;
+    }
+
+    public User updateUser(Long id, String username, String email, MultipartFile avatar, String selectedAvatar) throws IOException {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
@@ -129,6 +143,12 @@ public class UserService {
         if (avatar != null && !avatar.isEmpty()) {
             // Handle avatar file saving (this would involve saving the file somewhere and setting the path on the user)
             String avatarPath = saveAvatarFile(avatar); // This method should save the file and return the path
+            System.out.println("\n" + avatarPath + "\n");
+            user.setAvatarPath(avatarPath);
+        } else if (selectedAvatar != null && !selectedAvatar.isEmpty()) {
+            // Copy the selected default avatar to the uploads directory
+            String avatarPath = copySelectedAvatar(selectedAvatar);
+            System.out.println("\n" + avatarPath + "\n");
             user.setAvatarPath(avatarPath);
         }
 

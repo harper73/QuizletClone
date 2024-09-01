@@ -4,6 +4,7 @@ import com.project.quizletclone.model.Bookmark;
 import com.project.quizletclone.model.User;
 import com.project.quizletclone.model.Performance;
 import com.project.quizletclone.model.Achievement;
+import com.project.quizletclone.repository.UserRepository;
 import com.project.quizletclone.service.PerformanceService;
 import com.project.quizletclone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -87,10 +91,19 @@ public class UserController {
 
         // If the old password is correct, update the user fields
 //        This works perfectly, modify updateUser so we can change password as well !!!
-        userService.updateUser(id, username, email, avatar);
+//        avatar that get updated can be both manually upload and default chosen
+
+        System.out.println("\n REACH THIS PART\n");
+
+//        BUG: after update need to reload page
+        // Update the user with the new data
+        userService.updateUser(id, username, email, avatar, selectedAvatar);
+        // Reload the updated user
+        user = userService.findUserById(id);
+
         model.addAttribute("user", user);
         model.addAttribute("updateSuccess", true);
-        return "redirect:/api/users/" + id + "/manage";
+        return "userAccount";
     }
 
     @DeleteMapping("/{id}")
