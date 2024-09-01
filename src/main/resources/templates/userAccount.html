@@ -5,7 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/sidebar-02/css/style.css">
   <style>
     .account-form {
@@ -58,6 +61,64 @@
       flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
       gap: 10px;
     }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1050;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .avatar-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .modal-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .modal-avatar.selected {
+      border-color: #007bff;
+    }
+
   </style>
 
 </head>
@@ -80,12 +141,14 @@
 
     <div class="account-form">
       <div class="avatar-container">
-        <img th:src="@{/uploads/{avatarPath}(avatarPath=${user.avatarPath})}" alt="User Avatar">
+        <img id="currentAvatar" th:src="@{/uploads/{avatarPath}(avatarPath=${user.avatarPath})}" alt="User Avatar" data-toggle="modal" data-target="#avatarModal">
+        <p class="mt-2 text-muted">Click to change avatar</p>
       </div>
       <div class="form-container">
         <!-- Form to update user information -->
         <form th:action="@{/api/users/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">
           <input type="hidden" name="_method" value="put"/>
+          <input type="hidden" id="selectedAvatarInput" name="selectedAvatar" value="">
 
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -158,31 +221,32 @@
     <!--                  <input type="date" id="dob" name="dob" th:value="${user.dob}" class="form-control"/>-->
     <!--                </div>-->
 
-    <!-- Form to update user information -->
-<!--    <form th:action="@{/api/users/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">-->
-<!--      <input type="hidden" name="_method" value="put"/>-->
-<!--      <div class="form-group">-->
-<!--        <label for="username">Username:</label>-->
-<!--        <input type="text" id="username" name="username" th:value="${user.username}" class="form-control"/>-->
-<!--      </div>-->
-<!--      <div class="form-group">-->
-<!--        <label for="email">Email:</label>-->
-<!--        <input type="email" id="email" name="email" th:value="${user.email}" class="form-control"/>-->
-<!--      </div>-->
-<!--      <div class="form-group">-->
-<!--        <label for="avatar">Avatar Image:</label>-->
-<!--        <input type="file" id="avatar" name="avatar" class="form-control-file"/>-->
-<!--      </div>-->
-<!--      <div class="form-group">-->
-<!--        <button type="submit" class="btn btn-primary">Update Account</button>-->
-<!--      </div>-->
-<!--    </form>-->
+  </div>
+</div>
 
-<!--    &lt;!&ndash; Link to delete user account &ndash;&gt;-->
-<!--    <form th:action="@{/api/users/{id}(id=${user.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete your account?');">-->
-<!--      <input type="hidden" name="_method" value="delete"/>-->
-<!--      <button type="submit" class="btn btn-danger">Delete Account</button>-->
-<!--    </form>-->
+<!-- Modal for Default Avatars -->
+<div id="avatarModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="avatarModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="avatarModalLabel">Select an Avatar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-wrap justify-content-center">
+          <img th:src="@{/defaults/avatar1.jpg}" class="modal-avatar" alt="Avatar 1">
+          <img th:src="@{/defaults/avatar2.jpg}" class="modal-avatar" alt="Avatar 2">
+          <img th:src="@{/defaults/avatar3.jpg}" class="modal-avatar" alt="Avatar 3">
+          <!-- Add more avatars as needed -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="confirmAvatar" class="btn btn-primary" disabled>Confirm</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -190,5 +254,36 @@
 <script src="/sidebar-02/js/popper.js"></script>
 <script src="/sidebar-02/js/bootstrap.min.js"></script>
 <script src="/sidebar-02/js/main.js"></script>
+
+<script>
+  $(document).ready(function() {
+    var selectedAvatarUrl = '';
+
+    // Handle avatar selection
+    $('.modal-avatar').on('click', function() {
+      $('.modal-avatar').removeClass('selected');
+      $(this).addClass('selected');
+      selectedAvatarUrl = $(this).attr('src');
+      $('#confirmAvatar').prop('disabled', false);
+    });
+
+    // Confirm avatar selection
+    $('#confirmAvatar').on('click', function() {
+      if(selectedAvatarUrl) {
+        $('#currentAvatar').attr('src', selectedAvatarUrl);
+        $('#selectedAvatarInput').val(selectedAvatarUrl);
+        $('#avatarModal').modal('hide');
+      }
+    });
+
+    // Reset selection when modal closes
+    $('#avatarModal').on('hidden.bs.modal', function () {
+      $('.modal-avatar').removeClass('selected');
+      $('#confirmAvatar').prop('disabled', true);
+      selectedAvatarUrl = '';
+    });
+  });
+
+</script>
 </body>
 </html>

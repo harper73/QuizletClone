@@ -61,11 +61,14 @@ public class UserController {
 
     @PutMapping("/{id}")
     public String updateUser(@PathVariable Long id,
+                             @RequestParam(required = false) String firstName,
+                             @RequestParam(required = false) String lastName,
                              @RequestParam(required = false) String username,
                              @RequestParam(required = false) String email,
                              @RequestParam(required = false) String dateOfBirth,
                              @RequestParam(required = false) MultipartFile avatar,
-                             @RequestParam(required = false) String oldPassword,
+                             @RequestParam(required = false) String selectedAvatar,
+                             @RequestParam String oldPassword,
                              @RequestParam(required = false) String newPassword,
                              Model model) throws IOException {
         // Fetch the user from the database
