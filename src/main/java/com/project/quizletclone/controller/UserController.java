@@ -8,6 +8,8 @@ import com.project.quizletclone.repository.UserRepository;
 import com.project.quizletclone.service.PerformanceService;
 import com.project.quizletclone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api/users")
@@ -64,27 +68,33 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public String updateUser(@PathVariable Long id,
-                             @RequestParam(required = false) String firstName,
-                             @RequestParam(required = false) String lastName,
-                             @RequestParam(required = false) String username,
-                             @RequestParam(required = false) String email,
-                             @RequestParam(required = false) String dateOfBirth,
-                             @RequestParam(required = false) MultipartFile avatar,
-                             @RequestParam(required = false) String selectedAvatar,
-                             @RequestParam String oldPassword,
-                             @RequestParam(required = false) String newPassword,
-                             Model model) throws IOException {
-        // Fetch the user from the database
-        User user = userService.findUserById(id);
+    public ResponseEntity<Map<String, String>> updateUser(@PathVariable Long id,
+                              @RequestParam(required = false) String firstName,
+                              @RequestParam(required = false) String lastName,
+                              @RequestParam(required = false) String username,
+                              @RequestParam(required = false) String email,
+                              @RequestParam(required = false) String dateOfBirth,
+                              @RequestParam(required = false) MultipartFile avatar,
+                              @RequestParam(required = false) String selectedAvatar,
+                              @RequestParam String oldPassword,
+                              @RequestParam(required = false) String newPassword,
+                              Model model) throws IOException {
+//        // Fetch the user from the database
+//        User user = userService.findUserById(id);
+//
+//        // Verify the old password
+//        if (user == null || oldPassword.isEmpty() || !passwordEncoder.matches(oldPassword, user.getPassword())) {
+//            model.addAttribute("invalidOldPassword", true);
+//            model.addAttribute("user", user);
+//            return "userAccount";  // Return to the form page with an error
+//        } else {
+//            model.addAttribute("invalidOldPassword", false);
+//        }
 
-        // Verify the old password
-        if (user == null || oldPassword.isEmpty() || !passwordEncoder.matches(oldPassword, user.getPassword())) {
-            model.addAttribute("invalidOldPassword", true);
-            model.addAttribute("user", user);
-            return "userAccount";  // Return to the form page with an error
-        } else {
-            model.addAttribute("invalidOldPassword", false);
+        // Handle user fetching and password verification (omitted for brevity)
+        User user = userService.findUserById(id);
+        if (user == null || !passwordEncoder.matches(oldPassword, user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "Invalid old password"));
         }
 
 //        User updatedUser = userService.updateUser(id, username, email, dateOfBirth, avatar, oldPassword, newPassword);
@@ -95,15 +105,21 @@ public class UserController {
 
         System.out.println("\n REACH THIS PART\n");
 
+        System.out.println("\n" + selectedAvatar + "\n");
+
 //        BUG: after update need to reload page
         // Update the user with the new data
         userService.updateUser(id, username, email, avatar, selectedAvatar);
-        // Reload the updated user
-        user = userService.findUserById(id);
 
-        model.addAttribute("user", user);
-        model.addAttribute("updateSuccess", true);
-        return "userAccount";
+        // Return success response
+        return ResponseEntity.ok(Collections.singletonMap("message", "User updated successfully"));
+
+//        // Reload the updated user
+//        user = userService.findUserById(id);
+//
+//        model.addAttribute("user", user);
+//        model.addAttribute("updateSuccess", true);
+//        return "userAccount";
     }
 
     @DeleteMapping("/{id}")

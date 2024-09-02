@@ -112,21 +112,34 @@ public class UserService {
             Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
         }
         // Return the file name
+
+        System.out.println("\n UPLOAD AVATAR" + fileName + "\n");
         return fileName;
     }
 
     private String copySelectedAvatar(String selectedAvatar) throws IOException {
+
         // Get the file name from the selected avatar path
         String fileName = selectedAvatar.substring(selectedAvatar.lastIndexOf('/') + 1);
+
+        System.out.println("\n" + selectedAvatar + "\n");
+        System.out.println("\n" + fileName + "\n");
 
         // Define the source and target paths
         Path sourcePath = Paths.get("src/main/resources/static" + selectedAvatar).toAbsolutePath().normalize();
         Path targetPath = uploadPath.resolve(fileName);
 
+        // Ensure the source file exists before copying
+        if (!Files.exists(sourcePath)) {
+            throw new IOException("Source file does not exist: " + sourcePath);
+        }
+
         // Copy the file from the source to the target location
         Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
 
         // Return the file name to be stored in the user's avatar path
+
+        System.out.println("\n DEFAULT AVATAR" + fileName + "\n");
         return fileName;
     }
 
@@ -143,12 +156,12 @@ public class UserService {
         if (avatar != null && !avatar.isEmpty()) {
             // Handle avatar file saving (this would involve saving the file somewhere and setting the path on the user)
             String avatarPath = saveAvatarFile(avatar); // This method should save the file and return the path
-            System.out.println("\n" + avatarPath + "\n");
+            System.out.println("\nTEST HERE 1" + avatarPath + "\n");
             user.setAvatarPath(avatarPath);
         } else if (selectedAvatar != null && !selectedAvatar.isEmpty()) {
             // Copy the selected default avatar to the uploads directory
             String avatarPath = copySelectedAvatar(selectedAvatar);
-            System.out.println("\n" + avatarPath + "\n");
+            System.out.println("\n TEST HERE 2" + avatarPath + "\n");
             user.setAvatarPath(avatarPath);
         }
 

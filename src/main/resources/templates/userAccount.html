@@ -146,7 +146,9 @@
       </div>
       <div class="form-container">
         <!-- Form to update user information -->
-        <form th:action="@{/api/users/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">
+        <form id="userUpdateForm" th:action="@{/api/users/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">
+          <input type="hidden" id="userId" name="userId" th:value="${user.id}" />
+
           <input type="hidden" name="_method" value="put"/>
           <input type="hidden" id="selectedAvatarInput" name="selectedAvatar" value="">
 
@@ -244,7 +246,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="confirmAvatar" class="btn btn-primary" disabled>Confirm</button>
+        <button type="button" class="btn btn-primary" id="confirmAvatarSelection">Confirm</button>
       </div>
     </div>
   </div>
@@ -252,38 +254,182 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
-    var selectedAvatarUrl = '';
+  // $(document).ready(function() {
+  //   var selectedAvatarUrl = '';
+  //
+  //   // Handle avatar selection
+  //   $('.modal-avatar').on('click', function() {
+  //     $('.modal-avatar').removeClass('selected');
+  //     $(this).addClass('selected');
+  //     selectedAvatarUrl = $(this).attr('src');
+  //     $('#confirmAvatar').prop('disabled', false);
+  //   });
+  //
+  //   // Confirm avatar selection
+  //   $('#confirmAvatar').on('click', function() {
+  //     if(selectedAvatarUrl) {
+  //       var fileName = selectedAvatarUrl.split('/').pop();
+  //       console.log(fileName);
+  //       $('#currentAvatar').attr('src', selectedAvatarUrl);
+  //       $('#selectedAvatarInput').val(selectedAvatarUrl);
+  //       $('#avatar').val(''); // Clear the file input
+  //       $('#avatarModal').modal('hide');
+  //     }
+  //   });
+  //
+  //   // // Reset selection when modal closes
+  //   $('#avatarModal').on('hidden.bs.modal', function () {
+  //     $('.modal-avatar').removeClass('selected');
+  //     $('#confirmAvatar').prop('disabled', true);
+  //     selectedAvatarUrl = '';
+  //   });
+  // });
 
-    // Handle avatar selection
-    $('.modal-avatar').on('click', function() {
-      $('.modal-avatar').removeClass('selected');
-      $(this).addClass('selected');
-      selectedAvatarUrl = $(this).attr('src');
-      $('#confirmAvatar').prop('disabled', false);
+  document.addEventListener("DOMContentLoaded", function() {
+    const avatarInput = document.getElementById('avatar');
+    const selectedAvatarInput = document.getElementById('selectedAvatarInput');
+    const currentAvatar = document.getElementById('currentAvatar');
+    const modal = document.getElementById('avatarModal');
+    const avatars = document.querySelectorAll('.modal-avatar');
+    let selectedAvatar = null;
+
+    // Handle avatar selection from modal
+    avatars.forEach(avatar => {
+      avatar.addEventListener('click', function() {
+        avatars.forEach(av => av.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedAvatar = this.src;
+
+        // // Clear previous selection
+        // selectedAvatarInput.value = ''; // Ensure it's cleared before setting
+
+        // Convert the full URL to a relative path
+        const relativePath = new URL(selectedAvatar).pathname;
+        selectedAvatarInput.value = relativePath; // Set the new value
+      });
     });
 
     // Confirm avatar selection
-    $('#confirmAvatar').on('click', function() {
-      if(selectedAvatarUrl) {
-        var fileName = selectedAvatarUrl.split('/').pop();
-        console.log(fileName);
-        $('#currentAvatar').attr('src', selectedAvatarUrl);
-        $('#selectedAvatarInput').val(selectedAvatarUrl);
-        $('#avatar').val(''); // Clear the file input
-        $('#avatarModal').modal('hide');
+    document.getElementById('confirmAvatarSelection').addEventListener('click', function() {
+      if (selectedAvatar) {
+        // Convert the full URL to a relative path
+        // const relativePath = new URL(selectedAvatar).pathname;
+        // selectedAvatarInput.value = relativePath; // Set the new value
+        console.log("Selected Avatar Path:", selectedAvatarInput.value);
+        currentAvatar.src = selectedAvatar;
+        console.log("HEY -1", currentAvatar.src);
+        $(modal).modal('hide');
+
+        // Reset selectedAvatar
+        selectedAvatar = null;
       }
     });
 
-    // // Reset selection when modal closes
-    $('#avatarModal').on('hidden.bs.modal', function () {
-      $('.modal-avatar').removeClass('selected');
-      $('#confirmAvatar').prop('disabled', true);
-      selectedAvatarUrl = '';
+    // Handle form submission
+    document.getElementById('userUpdateForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const form = event.target;
+
+      const formData = new FormData(form);
+      // formData.append('selectedAvatar', selectedAvatarInput.value);
+
+      // Log all formData entries
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
+      const userId = document.getElementById('userId').value; // Get userId from hidden field
+      console.log(userId);
+
+      fetch(`/api/users/${userId}`, { // Replace with the correct user ID and endpoint
+        method: 'PUT',
+        body: formData
+      })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse JSON response
+              })
+              .then(data => {
+                console.log(data); // Log the response data
+
+                // if (selectedAvatarInput.value) {
+                //   console.log("HEY", `${selectedAvatarInput.value}`);
+                //   const avatarPath = selectedAvatarInput.value.replace('/defaults', '');
+                //   console.log("HEY", avatarPath);
+                //   currentAvatar.src = `/uploads${avatarPath}`; // Update avatar image
+                //   console.log("Updated Avatar Path:", currentAvatar.src);
+                //
+                //   // Clear selected avatar after updating
+                //   selectedAvatar = null;
+                //   selectedAvatarInput.value = '';
+                //
+                //   window.location.reload();
+                // }
+
+                if (data.message === "User updated successfully") {
+                  // Handle image URL update only after successful response
+                  const selectedAvatarInput = document.getElementById('selectedAvatarInput');
+                  const currentAvatar = document.getElementById('currentAvatar');
+
+                  if (selectedAvatarInput.value) {
+                    const avatarPath = selectedAvatarInput.value.replace('/defaults', '');
+                    const imageUrl = `/uploads${avatarPath}`;
+
+                    // Log image URL
+                    console.log('Updated Avatar Path:', imageUrl);
+
+                    // Function to check if the image is available
+                    function checkImageAvailability(url, callback) {
+                      const img = new Image();
+                      img.onload = () => callback(true);
+                      img.onerror = () => callback(false);
+                      img.src = url;
+                    }
+
+                    // Retry mechanism to load the image
+                    function loadImageWithRetry(url, retries = 5, delay = 1000) {
+                      checkImageAvailability(url, (isAvailable) => {
+                        if (isAvailable) {
+                          currentAvatar.src = `${url}?t=${new Date().getTime()}`;
+                          console.log('Image loaded successfully');
+                        } else if (retries > 0) {
+                          console.log(`Retrying to load image... (${retries} retries left)`);
+                          setTimeout(() => loadImageWithRetry(url, retries - 1, delay), delay);
+                        } else {
+                          console.error('Error loading image:', url);
+                        }
+                      });
+                    }
+
+                    // Start the retry mechanism
+                    loadImageWithRetry(imageUrl);
+                  }
+
+                  // Optionally refresh the page or part of it
+                  location.reload();
+
+                  console.log("Will error happens before this?")
+                } else {
+                  console.error('Update failed:', data.message);
+                }
+              })
+              .catch(error => console.error('Error:', error));
     });
 
-
-
+    // Preview uploaded avatar immediately
+    avatarInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          currentAvatar.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+      }
+    });
   });
 
 </script>
