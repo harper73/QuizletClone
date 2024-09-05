@@ -7,6 +7,8 @@ import com.project.quizletclone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+
 @Service
 public class AchievementService {
 
@@ -16,7 +18,7 @@ public class AchievementService {
     @Autowired
     private AchievementRepository achievementRepository;
 
-    public Achievement addAchievement(Long userId, String title, String description, String dateAwarded) {
+    public Achievement addAchievement(Long userId, String title, String description, Date dateAwarded) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Achievement achievement = new Achievement();
         achievement.setUser(user);

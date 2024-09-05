@@ -70,7 +70,8 @@ public class QuizGradingService {
             achievement.setUser(user);
             achievement.setTitle(title);
             achievement.setDescription(description);
-            achievement.setDateAwarded(LocalDate.now().toString());
+            // Convert LocalDate to java.sql.Date
+            achievement.setDateAwarded(java.sql.Date.valueOf(LocalDate.now()));
 
             achievementRepository.save(achievement);
         }

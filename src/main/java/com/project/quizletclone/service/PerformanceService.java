@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.time.LocalDate;
+import java.sql.Date;
 
 @Service
 public class PerformanceService {
@@ -32,7 +33,7 @@ public class PerformanceService {
         performance.setQuiz(quiz);
         performance.setScore(score);
         performance.setDuration(duration);
-        performance.setDateTaken(LocalDate.now().toString());
+        performance.setDateTaken(Date.valueOf(LocalDate.now())); // Use SQL Date
 
         return performanceRepository.save(performance);
     }

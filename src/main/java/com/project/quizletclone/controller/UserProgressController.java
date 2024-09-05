@@ -30,7 +30,7 @@ public class UserProgressController {
     @Autowired
     private AchievementService achievementService;
 
-    @GetMapping("/{userId}/progress")
+    @GetMapping("/{userId}/dashboard")
     public String getUserDashboard(@PathVariable Long userId, Authentication authentication, Model model) {
         System.out.println("Start here");
         System.out.println(userId);
@@ -83,6 +83,10 @@ public class UserProgressController {
 
         Iterable<Performance> performances = performanceService.getPerformance(user.getId()); // Fetch performances
 
+        performances.forEach(performance -> {
+            System.out.println("Performance Date: " + performance.getDateTaken());
+        });
+
         Iterable<Achievement> achievements = achievementService.getAchievements(user.getId()); // Fetch achievements
 
         System.out.println("\nReach 5\n");
@@ -96,7 +100,7 @@ public class UserProgressController {
         model.addAttribute("performances", performances); // Add performances to model
         model.addAttribute("achievements", achievements); // Add achievements to model
 
-        return "userProgress"; // Thymeleaf template name
+        return "userDashboard"; // Thymeleaf template name
     }
 
     @GetMapping("/test")

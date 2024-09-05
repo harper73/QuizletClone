@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .correct { color: green; }
+        .incorrect { color: red; }
+    </style>
+</head>
+<body>
+
+    <div class="container my-4">
+        <!-- Course 1: Mathematics -->
+        <h2>Mathematics</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Algebra 101</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 70%;">70%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Graphs</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 50%;">50%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Functions</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 80%;">80%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Integration</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 60%;">60%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Course 2: Physics -->
+        <h2>Physics</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Newtonian Mechanics</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 65%;">65%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Electromagnetism</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 50%;">50%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Thermodynamics</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 80%;">80%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Optics</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 70%;">70%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Course 3: Computer Science -->
+        <h2>Computer Science</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Data Structures</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 75%;">75%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Algorithms</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 50%;">50%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Operating Systems</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 80%;">80%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Networks</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 90%;">90%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Course 4: Chemistry -->
+        <h2>Chemistry</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Organic Chemistry</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 60%;">60%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Inorganic Chemistry</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 40%;">40%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Physical Chemistry</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 70%;">70%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Biochemistry</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 80%;">80%</div>
+                        </div>
+                        <br>
+                        <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                        <a href="#" class="btn btn-primary mt-2 w-100">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="container mt-5">
+        <div id="result" class="alert alert-info" style="display: none;"></div>
+        <div class="card">
+            <div class="card-header">
+                <h3>Quiz</h3>
+            </div>
+            <div class="card-body">
+                <!-- Question 1 -->
+                <div class="mb-4">
+                    <h5 id="question1-title">What is 2 + 2?</h5>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question1" id="q1a1" value="3">
+                        <label class="form-check-label" for="q1a1">3</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question1" id="q1a2" value="4">
+                        <label class="form-check-label" for="q1a2">4</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question1" id="q1a3" value="5">
+                        <label class="form-check-label" for="q1a3">5</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question1" id="q1a4" value="6">
+                        <label class="form-check-label" for="q1a4">6</label>
+                    </div>
+                </div>
+                <!-- Question 2 -->
+                <div class="mb-4">
+                    <h5 id="question2-title">What is the capital of France?</h5>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question2" id="q2a1" value="Berlin">
+                        <label class="form-check-label" for="q2a1">Berlin</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question2" id="q2a2" value="Madrid">
+                        <label class="form-check-label" for="q2a2">Madrid</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question2" id="q2a3" value="Paris">
+                        <label class="form-check-label" for="q2a3">Paris</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question2" id="q2a4" value="Rome">
+                        <label class="form-check-label" for="q2a4">Rome</label>
+                    </div>
+                </div>
+                <!-- Question 3 -->
+                <div class="mb-4">
+                    <h5 id="question3-title">Which is the largest planet in our solar system?</h5>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question3" id="q3a1" value="Earth">
+                        <label class="form-check-label" for="q3a1">Earth</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question3" id="q3a2" value="Mars">
+                        <label class="form-check-label" for="q3a2">Mars</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question3" id="q3a3" value="Jupiter">
+                        <label class="form-check-label" for="q3a3">Jupiter</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question3" id="q3a4" value="Saturn">
+                        <label class="form-check-label" for="q3a4">Saturn</label>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="submitQuiz()">Submit</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function submitQuiz() {
+            // Correct answers
+            const correctAnswers = {
+                question1: '4',
+                question2: 'Paris',
+                question3: 'Jupiter'
+            };
+
+            let score = 0;
+            let unanswered = [];
+
+            // Check each question
+            for (let question in correctAnswers) {
+                const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+                const questionTitle = document.getElementById(`${question}-title`);
+
+                if (!selectedAnswer) {
+                    unanswered.push(question);
+                }
+            }
+
+            if (unanswered.length > 0) {
+                if (!confirm(`You have unanswered questions. Do you want to continue?`)) {
+                    return;
+                }
+            }
+
+            // Evaluate answers
+            for (let question in correctAnswers) {
+                const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+                const questionTitle = document.getElementById(`${question}-title`);
+
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === correctAnswers[question]) {
+                        questionTitle.innerHTML += ' <span class="correct">(Correct 1/1)</span>';
+                        score++;
+                    } else {
+                        questionTitle.innerHTML += ' <span class="incorrect">(Wrong 0/1)</span>';
+                    }
+                } else {
+                    questionTitle.innerHTML += ' <span class="incorrect">(No answer 0/1)</span>';
+                }
+            }
+
+            // Display result at the top
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `You scored ${score} out of 3`;
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

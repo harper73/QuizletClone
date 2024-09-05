@@ -160,8 +160,8 @@ public class UserController {
 
         if (user != null) {
             Long userId = user.getId();
-            // Redirect to the specific user's progress page
-            return "redirect:/user/" + userId + "/progress";
+            // Redirect to the specific user's dashboard page
+            return "redirect:/user/" + userId + "/dashboard";
         } else {
             // Handle the case where the user is not found
             return "redirect:/login?error=userNotFound";
@@ -178,7 +178,7 @@ public class UserController {
 //            if (user != null) {
 //                Long userId = user.getId();
 //                System.out.println("Login successful for user: " + username);
-//                return "redirect:/user/" + userId + "/progress"; // Redirect to user's progress page
+//                return "redirect:/user/" + userId + "/dashboard"; // Redirect to user's dashboard page
 //            } else {
 //                model.addAttribute("error", "User not found.");
 //                return "login"; // Return to login page with error message

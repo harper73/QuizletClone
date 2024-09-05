@@ -1,6 +1,7 @@
 package com.project.quizletclone.model;
 
 import jakarta.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "achievements")
@@ -19,8 +20,9 @@ public class Achievement {
     @Column(nullable = false)
     private String description;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "dateAwarded")
-    private String dateAwarded;
+    private Date dateAwarded;
 
     // Getters and setters
     public Long getId() {
@@ -55,11 +57,11 @@ public class Achievement {
         this.description = description;
     }
 
-    public String getDateAwarded() {
+    public Date getDateAwarded() {
         return dateAwarded;
     }
 
-    public void setDateAwarded(String dateAwarded) {
+    public void setDateAwarded(Date dateAwarded) {
         this.dateAwarded = dateAwarded;
     }
 

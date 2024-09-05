@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Progress Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/sidebar-02/css/style.css">
+</head>
+<body>
+<div class="wrapper d-flex align-items-stretch">
+<!-- Include the base template -->
+<div th:replace="~{fragments/base :: content}"></div>
+
+<!-- Page Content -->
+<div id="content" class="p-4 p-md-5 pt-5">
+    <div th:replace="~{fragments/base :: content2}"></div>
+
+    <h2 class="mb-4">User Progress Dashboard</h2>
+    <h1>Progress Dashboard for <span th:text="${user.username}">Username</span></h1>
+
+    <h2>Hello, <span th:text="${user.username}">Username</span>!</h2>
+
+    <div class="container my-4">
+        <!-- Quizzes Section -->
+        <h2>Quizzes</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Algebra 101</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 70%;">70%</div>
+                        </div>
+                        <a href="#" class="btn btn-primary mt-2">View Past Results</a>
+                        <a href="#" class="btn btn-secondary mt-2">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Graphs</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 50%;">50%</div>
+                        </div>
+                        <a href="#" class="btn btn-primary mt-2">View Past Results</a>
+                        <a href="#" class="btn btn-secondary mt-2">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Functions</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 80%;">80%</div>
+                        </div>
+                        <a href="#" class="btn btn-primary mt-2">View Past Results</a>
+                        <a href="#" class="btn btn-secondary mt-2">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Integration</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 60%;">60%</div>
+                        </div>
+                        <a href="#" class="btn btn-primary mt-2">View Past Results</a>
+                        <a href="#" class="btn btn-secondary mt-2">Take Quiz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Articles Section -->
+        <h2>Articles</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Math in real life</h5>
+                        <p class="card-text">10 min read</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">What Is Algebraic Method?</h5>
+                        <p class="card-text">30 min read</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">A century of physics</h5>
+                        <p class="card-text">10 min read</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Introduction to mathematics</h5>
+                        <p class="card-text">10 min read</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Videos Section -->
+        <h2>Videos</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="video-thumbnail-placeholder.jpg" class="card-img-top" alt="Algebra 101">
+                    <div class="card-body">
+                        <h5 class="card-title">Algebra 101</h5>
+                        <a href="#" class="btn btn-primary">Watch Video</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="video-thumbnail-placeholder.jpg" class="card-img-top" alt="Graphs">
+                    <div class="card-body">
+                        <h5 class="card-title">Graphs</h5>
+                        <a href="#" class="btn btn-primary">Watch Video</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="video-thumbnail-placeholder.jpg" class="card-img-top" alt="Functions">
+                    <div class="card-body">
+                        <h5 class="card-title">Functions</h5>
+                        <a href="#" class="btn btn-primary">Watch Video</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="video-thumbnail-placeholder.jpg" class="card-img-top" alt="Integration">
+                    <div class="card-body">
+                        <h5 class="card-title">Integration</h5>
+                        <a href="#" class="btn btn-primary">Watch Video</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Statistics:</h3>
+    <ul>
+        <li>Total Quizzes Taken: <span th:text="${totalQuizzesTaken}">0</span></li>
+        <li>Average Score: <span th:text="${averageScore}">0</span></li>
+        <li>Quizzes Completed: <span th:text="${quizzesCompleted}">0</span></li>
+        <li>Achievements Unlocked: <span th:text="${achievementsUnlocked}">0</span></li>
+    </ul>
+
+    <h2>Performance</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Quiz</th>
+            <th>Score</th>
+            <th>Duration</th>
+            <th>Date Taken</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="performance : ${performances}">
+            <td th:text="${performance.quiz.title}">Quiz Title</td>
+            <td th:text="${performance.score}">Score</td>
+            <td th:text="${performance.duration}">Duration</td>
+            <td th:text="${#dates.format(performance.dateTaken, 'dd-MM-yyyy')}">Date Taken</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Achievements</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Date Awarded</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="achievement : ${achievements}">
+            <td th:text="${achievement.title}">Achievement Title</td>
+            <td th:text="${achievement.description}">Description</td>
+            <td th:text="${achievement.dateAwarded}">Date Awarded</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+<script src="/sidebar-02/js/jquery.min.js"></script>
+<script src="/sidebar-02/js/popper.js"></script>
+<script src="/sidebar-02/js/bootstrap.min.js"></script>
+<script src="/sidebar-02/js/main.js"></script>
+</body>
+</html>

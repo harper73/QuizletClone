@@ -10,6 +10,9 @@ import java.util.Set;
 public class ContentService {
 
     @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
     private VideoRepository videoRepository;
 
     @Autowired
@@ -20,6 +23,14 @@ public class ContentService {
 
     @Autowired
     private QuestionRepository questionRepository;
+
+    public Iterable<Course> getCourses() {
+        return courseRepository.findAll();
+    }
+
+    public Course findCourseByTitle(String title) {
+        return courseRepository.findByTitle(title);
+    }
 
     // Methods for Videos
     public Video addVideo(String title, String url, String description, String subjectArea) {
@@ -58,6 +69,11 @@ public class ContentService {
 
     public Iterable<Quiz> getQuizzes() {
         return quizRepository.findAll();
+    }
+
+    public Quiz findQuizById(Long id) {
+        return quizRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Quiz not found"));
     }
 
     // Methods for Questions

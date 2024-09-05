@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${quiz.title}">Quiz Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .correct { color: green; }
+        .incorrect { color: red; }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div id="result" class="alert alert-info" th:if="${totalScore != null}">
+        <h4 th:text="'Your Score: ' + ${totalScore} + '/' + ${questions.size()}"></h4>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 th:text="${quiz.title}">Quiz Title</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/api/content/{userId}/courses/{courseTitle}/quiz_{quizId}/submit(userId=${user.id}, courseTitle=${quiz.course.title}, quizId=${quiz.id})}" method="post">
+                <div th:each="question, iterStat : ${questions}" class="mb-4">
+                    <h5 th:text="'Question ' + ${iterStat.index + 1} + ': ' + ${question.questionText}">Question Text</h5>
+                    <div th:each="answer : ${question.answers}" class="form-check">
+                        <input class="form-check-input" type="radio" th:name="${question.id}" th:id="${'q' + question.id + 'a' + answer.id}" th:value="${answer.text}">
+                        <label class="form-check-label" th:for="${'q' + question.id + 'a' + answer.id}" th:text="${answer.text}">Answer Text</label>
+                    </div>
+                    <div th:if="${feedback != null}">
+                        <p th:if="${question.userAnswer == question.correctAnswer}" class="correct">Correct!</p>
+                        <p th:if="${question.userAnswer != question.correctAnswer}" class="incorrect">Incorrect. The correct answer is <span th:text="${question.correctAnswer}"></span></p>
+                        <p th:text="${feedback[iterStat.index]}"></p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Submit Quiz</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

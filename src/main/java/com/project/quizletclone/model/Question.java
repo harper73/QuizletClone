@@ -23,6 +23,10 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private Set<Answer> answers;
 
+    // New field to store the user's selected answer
+    @Transient // This annotation ensures this field is not persisted in the database
+    private String userAnswer;
+
     // Getters and setters
     public Long getId() {
         return id;
@@ -64,12 +68,21 @@ public class Question {
         this.answers = answers;
     }
 
+    public String getUserAnswer() {
+        return userAnswer;
+    }
+
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
                 "id=" + id +
                 ", questionText='" + questionText + '\'' +
                 ", correctAnswer='" + correctAnswer + '\'' +
+                ", userAnswer='" + userAnswer + '\'' +  // Include userAnswer in toString for debugging
                 '}';
     }
 }
