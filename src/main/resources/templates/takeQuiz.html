@@ -21,7 +21,9 @@
             <h3 th:text="${quiz.title}">Quiz Title</h3>
         </div>
         <div class="card-body">
-            <form th:action="@{/api/content/{userId}/courses/{courseTitle}/quiz_{quizId}/submit(userId=${user.id}, courseTitle=${quiz.course.title}, quizId=${quiz.id})}" method="post">
+            <p>User ID: <span id="userId" th:text="${user.id}"></span></p>
+
+            <form th:action="@{'/api/content/' + ${user.id} + '/courses/' + ${course.title} + '/quiz_' + ${quiz.id} + '/submit'}" method="post">
                 <div th:each="question, iterStat : ${questions}" class="mb-4">
                     <h5 th:text="'Question ' + ${iterStat.index + 1} + ': ' + ${question.questionText}">Question Text</h5>
                     <div th:each="answer : ${question.answers}" class="form-check">
@@ -39,6 +41,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Get the user ID from the span element
+    var userIdElement = document.getElementById('userId');
+    if (userIdElement) {
+        var userId = userIdElement.innerText;
+        console.log("User ID after post: " + userId);
+    } else {
+        console.error("User ID element not found.");
+    }
+</script>
 
 </body>
 </html>

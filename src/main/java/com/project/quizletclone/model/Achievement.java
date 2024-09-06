@@ -21,7 +21,7 @@ public class Achievement {
     private String description;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "dateAwarded")
+    @Column(name = "date_awarded")
     private Date dateAwarded;
 
     // Getters and setters

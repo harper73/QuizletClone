@@ -35,7 +35,26 @@ public class PerformanceService {
         performance.setDuration(duration);
         performance.setDateTaken(Date.valueOf(LocalDate.now())); // Use SQL Date
 
-        return performanceRepository.save(performance);
+        // Print details for debugging
+        System.out.println("Performance Details:");
+        System.out.println("User ID: " + userId);
+        System.out.println("Quiz ID: " + quizId);
+        System.out.println("Score: " + score);
+        System.out.println("Duration: " + duration);
+        System.out.println("Date Taken: " + performance.getDateTaken());
+
+        Performance savedPerformance = performanceRepository.save(performance);
+
+        // Print the saved performance object
+        System.out.println("Saved Performance Details:");
+        System.out.println("ID: " + savedPerformance.getId());
+        System.out.println("User ID: " + savedPerformance.getUser().getId());
+        System.out.println("Quiz ID: " + savedPerformance.getQuiz().getId());
+        System.out.println("Score: " + savedPerformance.getScore());
+        System.out.println("Duration: " + savedPerformance.getDuration());
+        System.out.println("Date Taken: " + savedPerformance.getDateTaken());
+
+        return savedPerformance;
     }
 
     public Iterable<Performance> getPerformance(Long userId) {

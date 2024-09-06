@@ -34,6 +34,7 @@
 <!--                </div>-->
                 <br>
                 <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                <p>${user.id}</p>
                 <a th:href="@{'/api/content/' + ${user.id} + '/courses/' + ${course.title} + '/quiz_' + ${quiz.id}}"
                     class="btn btn-primary mt-2 w-100">Take Quiz</a>
               </div>

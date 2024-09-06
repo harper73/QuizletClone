@@ -25,7 +25,7 @@ public class Performance {
     private long duration; // Time taken in seconds
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "dateTaken", nullable = false)
+    @Column(name = "date_taken", nullable = false)
     private Date dateTaken;
 
     // Getters and setters

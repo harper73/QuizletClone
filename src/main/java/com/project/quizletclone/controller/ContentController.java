@@ -139,6 +139,14 @@ public class ContentController {
         // Remove any unwanted form fields, such as CSRF tokens
         answers.remove("_csrf");
 
+        // Fetch the user by ID
+        User user = userService.findUserById(userId);
+
+        if (user == null) {
+            // Handle the case where the user is not found
+            return "error"; // Redirect to an error page or handle appropriately
+        }
+
         // Convert the answers from the form into a List<Answer>
         List<Answer> userAnswers = answers.entrySet().stream()
                 .map(entry -> {
@@ -155,14 +163,24 @@ public class ContentController {
         // Grade the quiz
         int totalScore = quizGradingService.gradeQuiz(userId, quizId, userAnswers);
 
+        System.out.println("\n Total Score: " + totalScore + "\n");
+        System.out.println("\n UserId testing: " + userId + "\n");
+
         // Generate feedback
         List<String> feedback = feedbackService.generateFeedback(quizId, userAnswers);
+
+        for (String fb : feedback) {
+            System.out.println("\n" + fb + "\n");
+        }
 
         // Add the results to the model
         model.addAttribute("totalScore", totalScore);
         model.addAttribute("feedback", feedback);
         model.addAttribute("quiz", contentService.findQuizById(quizId));
         model.addAttribute("questions", contentService.getQuestions(quizId));
+        model.addAttribute("user", user);
+        model.addAttribute("user", user);
+        model.addAttribute("course", contentService.findCourseByTitle(courseTitle));
 
         // Pass the user's answers back to the view for display
         for (Question question : contentService.getQuestions(quizId)) {
@@ -173,6 +191,8 @@ public class ContentController {
                 }
             }
         }
+
+        System.out.println("\n Test userID at backend after grading quiz: " + userId + "\n");
 
         return "takeQuiz"; // Return to the same template to display results and feedback
     }
