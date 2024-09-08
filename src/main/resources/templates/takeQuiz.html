@@ -33,7 +33,7 @@
                     <div th:if="${feedback != null}">
                         <p th:if="${question.userAnswer == question.correctAnswer}" class="correct">Correct!</p>
                         <p th:if="${question.userAnswer != question.correctAnswer}" class="incorrect">Incorrect. The correct answer is <span th:text="${question.correctAnswer}"></span></p>
-                        <p th:text="${feedback[iterStat.index]}"></p>
+                        <p th:text="${feedback[question.id]}"></p>
                     </div>
                 </div>
                 <button class="btn btn-primary" type="submit">Submit Quiz</button>

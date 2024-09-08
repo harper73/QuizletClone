@@ -167,11 +167,7 @@ public class ContentController {
         System.out.println("\n UserId testing: " + userId + "\n");
 
         // Generate feedback
-        List<String> feedback = feedbackService.generateFeedback(quizId, userAnswers);
-
-        for (String fb : feedback) {
-            System.out.println("\n" + fb + "\n");
-        }
+        Map<Long, String> feedback = feedbackService.generateFeedback(quizId, userAnswers);
 
         // Add the results to the model
         model.addAttribute("totalScore", totalScore);

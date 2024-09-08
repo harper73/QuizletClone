@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api/quizzes")
@@ -35,7 +36,7 @@ public class QuizController {
     @PostMapping("/{quizId}/grade")
     public ResponseEntity<?> gradeQuiz(@PathVariable Long userId, Long quizId, @RequestBody List<Answer> userAnswers) {
         int totalScore = quizGradingService.gradeQuiz(userId, quizId, userAnswers);
-        List<String> feedback = feedbackService.generateFeedback(quizId, userAnswers);
+        Map<Long, String> feedback = feedbackService.generateFeedback(quizId, userAnswers);
 
         return ResponseEntity.ok().body(new QuizResult(totalScore, feedback));
     }
@@ -43,9 +44,9 @@ public class QuizController {
     // Class to encapsulate the result and feedback
     public static class QuizResult {
         private int score;
-        private List<String> feedback;
+        private Map<Long, String> feedback;
 
-        public QuizResult(int score, List<String> feedback) {
+        public QuizResult(int score, Map<Long, String> feedback) {
             this.score = score;
             this.feedback = feedback;
         }
@@ -54,7 +55,7 @@ public class QuizController {
             return score;
         }
 
-        public List<String> getFeedback() {
+        public Map<Long, String> getFeedback() {
             return feedback;
         }
     }
