@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${quiz.title}">Quiz Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/sidebar-02/css/style.css">
     <style>
         .correct { color: green; }
         .incorrect { color: red; }
@@ -12,36 +15,72 @@
 </head>
 <body>
 
-<div class="container mt-5">
-    <div id="result" class="alert alert-info" th:if="${totalScore != null}">
-        <h4 th:text="'Your Score: ' + ${totalScore} + '/' + ${questions.size()}"></h4>
-    </div>
-    <div class="card">
-        <div class="card-header">
-            <h3 th:text="${quiz.title}">Quiz Title</h3>
-        </div>
-        <div class="card-body">
-            <p>User ID: <span id="userId" th:text="${user.id}"></span></p>
+<div class="wrapper d-flex align-items-stretch">
+    <!-- Include the base template -->
+    <div th:replace="~{fragments/base :: content}"></div>
 
-            <form th:action="@{'/api/content/' + ${user.id} + '/courses/' + ${course.title} + '/quiz_' + ${quiz.id} + '/submit'}" method="post">
-                <div th:each="question, iterStat : ${questions}" class="mb-4">
-                    <h5 th:text="'Question ' + ${iterStat.index + 1} + ': ' + ${question.questionText}">Question Text</h5>
-                    <div th:each="answer : ${question.answers}" class="form-check">
-                        <input class="form-check-input" type="radio" th:name="${question.id}" th:id="${'q' + question.id + 'a' + answer.id}" th:value="${answer.text}">
-                        <label class="form-check-label" th:for="${'q' + question.id + 'a' + answer.id}" th:text="${answer.text}">Answer Text</label>
-                    </div>
-                    <div th:if="${feedback != null}">
-                        <p th:if="${question.userAnswer == question.correctAnswer}" class="correct">Correct!</p>
-                        <p th:if="${question.userAnswer != question.correctAnswer}" class="incorrect">Incorrect. The correct answer is <span th:text="${question.correctAnswer}"></span></p>
-                        <p th:text="${feedback[question.id]}"></p>
+    <!-- Page Content -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <div th:replace="~{fragments/base :: content2}"></div>
+
+        <div class="container mt-5">
+            <div id="result" class="alert alert-info" th:if="${totalScore != null}">
+                <h4 th:text="'Your Score: ' + ${totalScore} + '/' + ${questions.size()}"></h4>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 th:text="${quiz.title}">Quiz Title</h3>
+                </div>
+                <div class="card-body">
+                    <p>User ID: <span id="userId" th:text="${user.id}"></span></p>
+                    <p>Course Title: <span id="courseTitle" th:text="${course.title}"></span></p>
+                    <p>Quiz ID: <span id="quizId" th:text="${quiz.id}"></span></p>
+
+                    <!-- Form for the quiz submission -->
+                    <form th:action="@{'/api/content/' + ${user.id} + '/courses/' + ${course.title} + '/quiz_' + ${quiz.id} + '/submit'}" method="post">
+                        <div th:each="question, iterStat : ${questions}" class="mb-4">
+                            <h5 th:text="'Question ' + ${iterStat.index + 1} + ': ' + ${question.questionText}">Question Text</h5>
+                            <div th:each="answer : ${question.answers}" class="form-check">
+                                <input class="form-check-input" type="radio" th:name="${question.id}" th:id="${'q' + question.id + 'a' + answer.id}" th:value="${answer.text}">
+                                <label class="form-check-label" th:for="${'q' + question.id + 'a' + answer.id}" th:text="${answer.text}">Answer Text</label>
+                            </div>
+
+                            <!-- Conditional elements that only show after quiz submission -->
+                            <div th:if="${quizSubmitted}">
+                                <br>
+                                <p>Your Answer: <span th:text="${question.userAnswer}"></span></p>
+                                <p th:if="${question.userAnswer == question.correctAnswer}" class="correct">Correct.</p>
+                                <p th:if="${question.userAnswer != question.correctAnswer}" class="incorrect">Incorrect!</p>
+
+                                <!-- Explanation button for each question -->
+                                <button type="button" th:id="'button-' + ${question.id}" th:onclick="'toggleExplanation(' + ${question.id} + ')'">
+                                    Show Explanation
+                                </button>
+                                <br>
+                                <div th:if="${feedback[question.id] != null}">
+                                    <br>
+                                    <!-- Feedback/Explanation content with a unique ID for each question -->
+                                    <p th:id="'explanation-' + ${question.id}" th:text="${feedback[question.id]}" style="display: none;"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Submit Button (only shown when the quiz has not been submitted yet) -->
+                        <div th:if="${quizSubmitted != null ? !quizSubmitted : true}">
+                            <button class="btn btn-primary" type="submit">Submit Quiz</button>
+                        </div>
+
+                    </form>
+                    <!-- Conditional elements that only show after quiz submission -->
+                    <div th:if="${quizSubmitted}">
+                        <!-- Buttons for Redo Quiz and Go to Quizzes -->
+                        <button class="btn btn-secondary" onclick="redoQuiz()">Redo Quiz</button>
+                        <button class="btn btn-secondary" onclick="goToQuizzes()">Go to Quizzes</button>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit">Submit Quiz</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
-
 <script>
     // Get the user ID from the span element
     var userIdElement = document.getElementById('userId');
@@ -51,6 +90,35 @@
     } else {
         console.error("User ID element not found.");
     }
+
+    var courseTitle = document.getElementById('courseTitle').textContent;
+    var quizId = document.getElementById('quizId').textContent;
+
+    function toggleExplanation(questionId) {
+        var explanationElement = document.getElementById('explanation-' + questionId);
+        var buttonElement = document.getElementById('button-' + questionId);
+
+        if (explanationElement.style.display === "none") {
+            explanationElement.style.display = "block"; // Show explanation
+            buttonElement.innerHTML = "Hide Explanation"; // Change button text
+        } else {
+            explanationElement.style.display = "none"; // Hide explanation
+            buttonElement.innerHTML = "Show Explanation"; // Reset button text
+        }
+    }
+
+    function redoQuiz() {
+        // Reload the quiz page for the same quiz
+        window.location.href = "/api/content/" + userId + "/courses/" + courseTitle + "/quiz_" + quizId;
+    }
+
+    function goToQuizzes() {
+        // Redirect to the quizzes page
+        var redirectUrl = "/api/content/" + userId + "/courses";
+        console.log("Redirect URL: " + redirectUrl);
+        window.location.href = redirectUrl;
+    }
+
 </script>
 
 </body>

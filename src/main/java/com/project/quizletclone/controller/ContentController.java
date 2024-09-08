@@ -129,6 +129,7 @@ public class ContentController {
         model.addAttribute("course", course);
         model.addAttribute("quiz", quiz);
         model.addAttribute("questions", questions);
+        model.addAttribute("quizSubmitted", false);  // Ensure quizSubmitted is set to false initially
 
         return "takeQuiz"; // The name of your Thymeleaf template for the specific quiz
     }
@@ -177,6 +178,8 @@ public class ContentController {
         model.addAttribute("user", user);
         model.addAttribute("user", user);
         model.addAttribute("course", contentService.findCourseByTitle(courseTitle));
+        // Add the submission status to the model
+        model.addAttribute("quizSubmitted", true);
 
         // Pass the user's answers back to the view for display
         for (Question question : contentService.getQuestions(quizId)) {
