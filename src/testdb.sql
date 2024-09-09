@@ -77,7 +77,7 @@
 -- VALUES
 --     ('Introduction to Programming', 'Computer Science', 4),
 --     ('Data Structures', 'Computer Science', 4);
-
+--
 
 -- Insert Questions and Answers for 'Newtonian Mechanics' (Physics)
 -- INSERT INTO questions (question_text, correct_answer, quiz_id)

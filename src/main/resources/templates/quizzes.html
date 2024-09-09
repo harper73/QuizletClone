@@ -19,6 +19,8 @@
     <div th:replace="~{fragments/base :: content2}"></div>
 
     <div class="container my-4">
+      <h2>Quizzes</h2>
+      <br>
       <div th:each="course : ${courses}">
         <!-- Course Name -->
         <h2 th:text="${course.title}">Course Name</h2>
@@ -50,5 +52,9 @@
 
   </div>
 </div>
+<script src="/sidebar-02/js/jquery.min.js"></script>
+<script src="/sidebar-02/js/popper.js"></script>
+<script src="/sidebar-02/js/bootstrap.min.js"></script>
+<script src="/sidebar-02/js/main.js"></script>
 </body>
 </html>

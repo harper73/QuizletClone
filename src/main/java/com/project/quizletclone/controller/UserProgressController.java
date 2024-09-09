@@ -1,9 +1,8 @@
 package com.project.quizletclone.controller;
 
-import com.project.quizletclone.model.Achievement;
-import com.project.quizletclone.model.User;
-import com.project.quizletclone.model.Performance;
+import com.project.quizletclone.model.*;
 import com.project.quizletclone.service.AchievementService;
+import com.project.quizletclone.service.ContentService;
 import com.project.quizletclone.service.UserService;
 import com.project.quizletclone.service.PerformanceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,9 @@ public class UserProgressController {
 
     @Autowired
     private AchievementService achievementService;
+
+    @Autowired
+    private ContentService contentService;
 
     @GetMapping("/{userId}/dashboard")
     public String getUserDashboard(@PathVariable Long userId, Authentication authentication, Model model) {
@@ -89,8 +91,19 @@ public class UserProgressController {
 
         Iterable<Achievement> achievements = achievementService.getAchievements(user.getId()); // Fetch achievements
 
+        // Fetch all courses
+        Iterable<Course> courses = contentService.getCourses();
+        // Fetch all articles
+        Iterable<Article> articles = contentService.getArticles();
+        // Fetch all quizzes
+        Iterable<Quiz> quizzes = contentService.getQuizzes();
+
         System.out.println("\nReach 5\n");
         model.addAttribute("user", user);
+        model.addAttribute("courses", courses);
+        model.addAttribute("quizzes", quizzes);
+        model.addAttribute("articles", articles);
+
         model.addAttribute("totalQuizzesTaken", totalQuizzesTaken);
         model.addAttribute("averageScore", averageScore);
         model.addAttribute("quizzesCompleted", quizzesCompleted);

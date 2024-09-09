@@ -46,6 +46,8 @@ CREATE TABLE IF NOT EXISTS articles (
                                         title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     subjectArea VARCHAR(255) NOT NULL
+    course_id BIGINT,
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS bookmarks (

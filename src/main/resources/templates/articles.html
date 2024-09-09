@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Articles</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/sidebar-02/css/style.css">
+</head>
+<body>
+<div class="wrapper d-flex align-items-stretch">
+    <!-- Include the base template -->
+    <div th:replace="~{fragments/base :: content}"></div>
+
+    <!-- Page Content -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <div th:replace="~{fragments/base :: content2}"></div>
+
+        <div class="container my-4">
+            <h2>Articles</h2>
+            <br>
+
+            <!-- Iterate over subject areas -->
+            <div th:each="subjectArea : ${articlesGroupedBySubjectArea}">
+                <h3 th:text="${subjectArea.key}">Subject Area</h3>
+
+                <div class="row">
+                    <!-- Iterate over articles within the current subject area -->
+                    <div th:each="article : ${subjectArea.value}" class="col-md-3 mb-4">
+                        <div class="card article-card">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${article.title}">Article Title</h5>
+                                <p class="card-text" th:text="${article.subjectArea}">Article Subject Area</p>
+                                <p class="card-text">10 min read</p>
+                                <a th:href="@{'/api/content/' + ${user.id} + '/articles/' + ${article.subjectArea} + '/article_' + ${article.id}}"
+                                   class="btn btn-primary">Read Article</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/sidebar-02/js/jquery.min.js"></script>
+<script src="/sidebar-02/js/popper.js"></script>
+<script src="/sidebar-02/js/bootstrap.min.js"></script>
+<script src="/sidebar-02/js/main.js"></script>
+</body>
+</html>

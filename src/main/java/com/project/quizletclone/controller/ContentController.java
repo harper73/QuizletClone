@@ -10,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -53,10 +51,68 @@ public class ContentController {
         return contentService.addArticle(title, content, subjectArea);
     }
 
-    @GetMapping("/articles")
-    public Iterable<Article> getArticles() {
-        return contentService.getArticles();
+    @GetMapping("/{userId}/articles")
+    public String getArticles(@PathVariable Long userId, Model model) {
+        // Fetch the user by ID
+        User user = userService.findUserById(userId);
+
+        if (user == null) {
+            // Handle the case where the user is not found
+            return "error"; // Redirect to an error page or handle appropriately
+        }
+
+        // Fetch all articles
+        Iterable<Article> articles = contentService.getArticles();
+
+        // Debug: Print out the articles to make sure they are being fetched
+        articles.forEach(article -> {
+            System.out.println("\nArticle: " + article.getTitle());
+        });
+
+        // Group articles by subjectArea
+        Map<String, List<Article>> articlesGroupedBySubjectArea = new LinkedHashMap<>();
+        for (Article article : articles) {
+            articlesGroupedBySubjectArea
+                    .computeIfAbsent(article.getSubjectArea(), k -> new ArrayList<>())
+                    .add(article);
+        }
+
+        // Add the user and articles to the model
+        model.addAttribute("user", user);
+        model.addAttribute("articles", articles);
+        model.addAttribute("articlesGroupedBySubjectArea", articlesGroupedBySubjectArea);
+
+        return "articles"; // The name of your Thymeleaf template for articles
     }
+
+    @GetMapping("/{userId}/articles/{subjectArea}/article_{articleId}")
+    public String showArticle(@PathVariable Long userId, @PathVariable String subjectArea, @PathVariable Long articleId, Model model) {
+        // Fetch the user by ID
+        User user = userService.findUserById(userId);
+
+        if (user == null) {
+            // Handle the case where the user is not found
+            return "error"; // Redirect to an error page or handle appropriately
+        }
+
+        // Fetch the article by ID
+        Article article = contentService.findArticleById(articleId);
+
+        if (article == null) {
+            // Handle the case where the article is not found
+            return "error"; // Redirect to an error page or handle appropriately
+        }
+
+        // Debug: Print out the article to make sure it is being fetched
+        System.out.println("Article: " + article.getTitle());
+
+        // Add the user and article to the model
+        model.addAttribute("user", user);
+        model.addAttribute("article", article);
+
+        return "readArticle"; // The name of your Thymeleaf template for displaying the article
+    }
+
 
     // Endpoints for Quizzes
     @PostMapping("/quizzes")

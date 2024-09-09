@@ -21,6 +21,7 @@
       align-items: center;     /* Center vertically */
     }
 
+
     /*.content-container {*/
     /*  padding: 20px;*/
     /*}*/
@@ -92,7 +93,7 @@
 <!--        </li>-->
         <li class="active"><a th:href="@{'/user/' + ${user.id} + '/dashboard'}">Dashboard</a></li>
         <li class="active"><a th:href="@{'/api/content/' + ${user.id} + '/courses'}">Quizzes</a></li>
-        <li class="active"><a href="#">Articles</a></li>
+        <li class="active"><a th:href="@{'/api/content/' + ${user.id} + '/articles'}">Articles</a></li>
         <li class="active"><a href="#">Videos</a></li>
         <li class="active"><a href="#">My Notes</a></li>
         <li class="active"><a href="#">Progression</a></li>

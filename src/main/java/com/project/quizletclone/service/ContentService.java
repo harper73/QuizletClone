@@ -59,6 +59,11 @@ public class ContentService {
         return articleRepository.findAll();
     }
 
+    public Article findArticleById(Long id) {
+        return articleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Article not found"));
+    }
+
     // Methods for Quizzes
     public Quiz addQuiz(String title, String subjectArea) {
         Quiz quiz = new Quiz();
