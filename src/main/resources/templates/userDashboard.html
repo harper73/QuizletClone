@@ -25,93 +25,47 @@
         <div class="container my-4">
             <!-- Quizzes Section -->
             <h2>Quizzes</h2>
-            <div class="row">
-                <div class="col-md-3 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Algebra 101</h5>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 70%;">70%</div>
+            <br>
+            <div th:each="course : ${courses}">
+                <!-- Course Name -->
+                <h2 th:text="${course.title}">Course Name</h2>
+
+                <div class="row" th:if="${#lists.size(course.quizzes) > 0}">
+                    <div class="col-md-3 mb-4" th:each="quiz : ${course.quizzes}">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${quiz.title}">Quiz Title</h5>
+<!--                                <div class="progress">-->
+<!--                                    <div class="progress-bar" role="progressbar"-->
+<!--                                         th:style="'width: ' + ${quiz.progress} + '%;'"-->
+<!--                                         th:text="${quiz.progress + '%'}">70%-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <br>
+                                <a href="#" class="btn btn-secondary mt-2 w-100">View Past Results</a>
+                                <a th:href="@{'/api/content/' + ${user.id} + '/courses/' + ${course.title} + '/quiz_' + ${quiz.id}}"
+                                   class="btn btn-primary mt-2 w-100">Take Quiz</a>
                             </div>
-                            <a href="#" class="btn btn-primary mt-2">View Past Results</a>
-                            <a href="#" class="btn btn-secondary mt-2">Take Quiz</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Graphs</h5>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 50%;">50%</div>
-                            </div>
-                            <a href="#" class="btn btn-primary mt-2">View Past Results</a>
-                            <a href="#" class="btn btn-secondary mt-2">Take Quiz</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Functions</h5>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 80%;">80%</div>
-                            </div>
-                            <a href="#" class="btn btn-primary mt-2">View Past Results</a>
-                            <a href="#" class="btn btn-secondary mt-2">Take Quiz</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Integration</h5>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 60%;">60%</div>
-                            </div>
-                            <a href="#" class="btn btn-primary mt-2">View Past Results</a>
-                            <a href="#" class="btn btn-secondary mt-2">Take Quiz</a>
-                        </div>
-                    </div>
+                <div th:if="${#lists.size(course.quizzes) == 0}">
+                    <p>No quizzes available for this course.</p>
                 </div>
             </div>
 
             <!-- Articles Section -->
             <h2>Articles</h2>
+            <br>
             <div class="row">
-                <div class="col-md-3 mb-4">
-                    <div class="card">
+                <div th:each="article : ${articles}" class="col-md-3 mb-4">
+                    <div class="card article-card">
                         <div class="card-body">
-                            <h5 class="card-title">Math in real life</h5>
+                            <h5 class="card-title" th:text="${article.title}">Article Title</h5>
+                            <p class="card-text" th:text="${article.subjectArea}">Article Subject Area</p>
                             <p class="card-text">10 min read</p>
-                            <a href="#" class="btn btn-primary">Read Article</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">What Is Algebraic Method?</h5>
-                            <p class="card-text">30 min read</p>
-                            <a href="#" class="btn btn-primary">Read Article</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">A century of physics</h5>
-                            <p class="card-text">10 min read</p>
-                            <a href="#" class="btn btn-primary">Read Article</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Introduction to mathematics</h5>
-                            <p class="card-text">10 min read</p>
-                            <a href="#" class="btn btn-primary">Read Article</a>
+                            <a th:href="@{'/api/content/' + ${user.id} + '/articles/' + ${article.subjectArea} + '/article_' + ${article.id}}"
+                               class="btn btn-primary">Read Article</a>
                         </div>
                     </div>
                 </div>
