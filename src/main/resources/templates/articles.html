@@ -8,6 +8,42 @@
     <link rel="stylesheet" href="/bootstrap-5.0.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/sidebar-02/css/style.css">
+    <style>
+        .upload-box {
+            border: 2px solid #007bff;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            width: 90%; /* Adjust width to be close to the container width */
+            margin: 0 auto; /* Center the upload box */
+        }
+
+        .upload-box:hover {
+            background-color: #f8f9fa;
+        }
+
+        .box-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+        }
+
+        .upload-icon {
+            max-width: 100%; /* Ensure the icon fits within the box */
+            max-height: 50px; /* Adjust the height as needed */
+            margin-bottom: 10px; /* Space between the icon and text */
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+    </style>
+
 </head>
 <body>
 <div class="wrapper d-flex align-items-stretch">
@@ -19,6 +55,24 @@
         <div th:replace="~{fragments/base :: content2}"></div>
 
         <div class="container my-4">
+
+            <!-- File Upload Section -->
+            <h2>Upload Files</h2>
+            <input type="file" id="fileUpload" multiple style="display: none;" />
+            <label for="fileUpload" class="upload-box">
+                <div class="box-content">
+                    <img th:src="@{/uploads/upload.png}" alt="Upload Icon" class="upload-icon">
+                    <p>Click here or drag and drop files</p>
+                    <!-- Include icon/graphic if desired -->
+                </div>
+            </label>
+
+            <!-- Buttons -->
+            <div class="button-group mt-3">
+                <button type="button" class="btn btn-primary">Take Quiz</button>
+                <button type="button" class="btn btn-secondary">Regenerate</button>
+            </div>
+
             <h2>Articles</h2>
             <br>
 
